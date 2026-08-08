@@ -1,0 +1,205 @@
+.diptych {
+  background-color: var(--color-background-primary);
+}
+
+.tinted {
+  background-color: var(--color-background-secondary);
+}
+
+/* --------------------------------------------------------------------
+   SHARED TEXT COLUMN
+   -------------------------------------------------------------------- */
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.title {
+  font: var(--font-display-2);
+  letter-spacing: -0.015em;
+  max-width: 14ch;
+}
+
+.body {
+  font: var(--font-body);
+  color: var(--color-text-secondary);
+  max-width: 46ch;
+}
+
+.points {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  max-width: 42ch;
+  border-top: 1px solid var(--color-line);
+}
+
+.point {
+  padding-block: 12px;
+  font: var(--font-tiny-1);
+  font-size: 0.9375rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--color-line);
+}
+
+/* --------------------------------------------------------------------
+   1 — STICKY
+   -------------------------------------------------------------------- */
+.grid {
+  display: grid;
+  gap: 40px;
+}
+
+.stickyMedia {
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: calc(var(--gap) * 2);
+    align-items: start;
+  }
+
+  .stickyMedia {
+    position: sticky;
+    top: calc(var(--header-height) + 40px);
+  }
+
+  .text {
+    padding-block: 40px 0;
+    gap: 24px;
+  }
+
+  .title {
+    font: var(--font-display-3);
+    font-size: 3.25rem;
+    line-height: 1.05;
+  }
+}
+
+/* --------------------------------------------------------------------
+   2 — DOUBLE MASK
+   -------------------------------------------------------------------- */
+.doubleGrid {
+  display: grid;
+  gap: 48px;
+}
+
+.doubleText {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.doubleMedia {
+  position: relative;
+  display: grid;
+  gap: 20px;
+}
+
+.maskA {
+  width: 72%;
+}
+
+.maskB {
+  width: 72%;
+  justify-self: end;
+}
+
+@media (min-width: 900px) {
+  .doubleGrid {
+    grid-template-columns: 4fr 6fr;
+    column-gap: calc(var(--gap) * 2);
+    align-items: center;
+  }
+
+  .doubleText {
+    gap: 24px;
+  }
+
+  .doubleMedia {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: var(--gap);
+  }
+
+  .maskA {
+    width: 100%;
+    margin-top: 72px;
+  }
+
+  .maskB {
+    width: 100%;
+  }
+}
+
+/* --------------------------------------------------------------------
+   3 — MAIN EDITO
+   -------------------------------------------------------------------- */
+.edito {
+  background-color: var(--color-background-inverse);
+  color: var(--color-text-inverse);
+}
+
+.editoInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.editoInner :global(.eyebrow) {
+  color: var(--color-grey-600);
+}
+
+.editoTitle {
+  display: block;
+  font: var(--font-display-2);
+  letter-spacing: -0.02em;
+}
+
+.editoBody {
+  font: var(--font-body);
+  color: var(--color-grey-600);
+  max-width: 54ch;
+}
+
+@media (min-width: 900px) {
+  .editoTitle {
+    font: var(--font-display-3);
+    font-size: 4rem;
+    line-height: 1.05;
+  }
+}
+
+/* --------------------------------------------------------------------
+   4 — SINGLE MASK (reversed)
+   -------------------------------------------------------------------- */
+.reverseGrid {
+  display: grid;
+  gap: 40px;
+}
+
+.reverseMedia {
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .reverseGrid {
+    grid-template-columns: 7fr 5fr;
+    column-gap: calc(var(--gap) * 2);
+    align-items: center;
+  }
+
+  .reverseGrid .text {
+    gap: 24px;
+  }
+}

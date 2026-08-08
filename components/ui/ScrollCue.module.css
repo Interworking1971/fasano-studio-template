@@ -1,0 +1,38 @@
+.cue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: scroll-cue 5.2s var(--ease-in-out-quad) infinite;
+}
+
+.label {
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.track {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 56px;
+  overflow: hidden;
+  background-color: currentcolor;
+  opacity: 0.25;
+}
+
+.thumb {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 40%;
+  background-color: currentcolor;
+  animation: scroll-cue-travel 2.6s var(--ease-in-out-quart) infinite;
+}
+
+@keyframes scroll-cue-travel {
+  0%   { transform: translateY(-100%); }
+  60%  { transform: translateY(250%); }
+  100% { transform: translateY(250%); }
+}

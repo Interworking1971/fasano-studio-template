@@ -1,0 +1,158 @@
+.timetable {
+  background-color: var(--color-background-secondary);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 48px;
+}
+
+.title {
+  font: var(--font-display-2);
+}
+
+.root {
+  border-top: 1px solid var(--color-line);
+}
+
+.item {
+  border-bottom: 1px solid var(--color-line);
+}
+
+.header {
+  display: flex;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  padding-block: 22px;
+  text-align: left;
+  color: inherit;
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
+.day {
+  flex: 1;
+  font: var(--font-display-4);
+  transition: color 0.35s var(--ease-out-quart);
+}
+
+.trigger:hover .day {
+  color: var(--color-accent);
+}
+
+.count {
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-text-secondary);
+}
+
+/* Plus that rotates into a minus. */
+.icon {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+.icon i {
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 1px;
+  background-color: currentcolor;
+  transition: transform 0.45s var(--ease-in-out-quart);
+}
+
+.icon i:last-child {
+  transform: rotate(90deg);
+}
+
+.trigger[data-state='open'] .icon i:last-child {
+  transform: rotate(0deg);
+}
+
+.trigger[data-state='open'] .icon i:first-child {
+  transform: rotate(180deg);
+}
+
+/* --------------------------------------------------------------------
+   CONTENT — height animated off Radix's measured variable.
+   -------------------------------------------------------------------- */
+.content {
+  overflow: hidden;
+}
+
+.content[data-state='open'] {
+  animation: slide-down 0.45s var(--ease-custom-1);
+}
+
+.content[data-state='closed'] {
+  animation: slide-up 0.35s var(--ease-custom-1);
+}
+
+.slots {
+  padding-bottom: 24px;
+}
+
+.slot {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  column-gap: 20px;
+  row-gap: 2px;
+  padding-block: 12px;
+  border-top: 1px solid var(--color-line);
+}
+
+.time {
+  font: var(--font-label-2);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-accent);
+}
+
+.name {
+  font: var(--font-label-2);
+  font-weight: var(--font-weight-regular);
+}
+
+.room {
+  grid-column: 2;
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-secondary);
+}
+
+.note {
+  margin-top: 32px;
+  font: var(--font-tiny-1);
+  color: var(--color-text-secondary);
+  max-width: 60ch;
+}
+
+@media (min-width: 768px) {
+  .slot {
+    grid-template-columns: 100px 1fr 200px;
+    align-items: baseline;
+    row-gap: 0;
+  }
+
+  .room {
+    grid-column: auto;
+    text-align: right;
+  }
+
+  .title {
+    font: var(--font-display-3);
+    font-size: 3.5rem;
+  }
+}

@@ -1,0 +1,70 @@
+.stepper {
+  background-color: var(--color-background-secondary);
+}
+
+.caption {
+  font: var(--font-display-5);
+  font-style: italic;
+  text-align: center;
+  max-width: 30ch;
+  margin: 0 auto 64px;
+  color: var(--color-text-secondary);
+}
+
+.steps {
+  display: grid;
+  gap: 64px;
+}
+
+.step {
+  display: grid;
+  gap: 24px;
+}
+
+.stepMedia {
+  width: 100%;
+}
+
+.stepText {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stepIndex {
+  font: var(--font-tiny-1);
+  letter-spacing: 0.24em;
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.stepTitle {
+  font: var(--font-display-5);
+  font-size: 1.75rem;
+}
+
+.stepBody {
+  font: var(--font-tiny-1);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  max-width: 38ch;
+}
+
+@media (min-width: 900px) {
+  .steps {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
+  }
+
+  .caption {
+    font: var(--font-display-2);
+    font-style: italic;
+    margin-bottom: 96px;
+    color: var(--color-text-primary);
+  }
+
+  /* Staircase the columns so the row never reads as three equal cards. */
+  .step:nth-child(2) { margin-top: 64px; }
+  .step:nth-child(3) { margin-top: 128px; }
+}

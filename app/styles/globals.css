@@ -1,0 +1,180 @@
+@import './reset.css';
+@import './tokens.css';
+
+/* ==========================================================================
+   GLOBAL PRIMITIVES
+   Layout helpers and shared animation keyframes that more than one
+   component needs. Component-specific styling lives in *.module.css.
+   ========================================================================== */
+
+body {
+  font: var(--font-body);
+  color: var(--color-text-primary);
+  background-color: var(--color-background-primary);
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bone-100);
+}
+
+/* --------------------------------------------------------------------
+   GRID — one container, one grid, used by every section.
+   -------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  padding-inline: var(--gap);
+  margin-inline: auto;
+  max-width: 1920px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
+/* --------------------------------------------------------------------
+   SECTION RHYTHM
+   -------------------------------------------------------------------- */
+.section {
+  position: relative;
+  padding-block: var(--section-gap);
+}
+
+.section--flush {
+  padding-block: 0;
+}
+
+/* --------------------------------------------------------------------
+   TYPE UTILITIES — thin wrappers over the scale tokens so JSX stays
+   readable. These are the *only* global classes that set a font.
+   -------------------------------------------------------------------- */
+.t-header      { font: var(--font-header); }
+.t-display-1   { font: var(--font-display-1); }
+.t-display-2   { font: var(--font-display-2); }
+.t-display-3   { font: var(--font-display-3); }
+.t-display-4   { font: var(--font-display-4); }
+.t-display-5   { font: var(--font-display-5); }
+.t-body        { font: var(--font-body); }
+.t-label-1     { font: var(--font-label-1); }
+.t-label-2     { font: var(--font-label-2); }
+.t-tiny-1      { font: var(--font-tiny-1); }
+
+/* The signature move of the reference system: an italic serif word
+   dropped into an otherwise roman display line. */
+.em {
+  font-style: italic;
+}
+
+/* A small uppercase sans eyebrow above display type. */
+.eyebrow {
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-text-secondary);
+}
+
+.muted { color: var(--color-text-secondary); }
+
+/* --------------------------------------------------------------------
+   SHARED KEYFRAMES
+   -------------------------------------------------------------------- */
+
+/* Line-mask reveal: the child slides up out of an overflow-hidden parent. */
+@keyframes translate-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Header entrance: each row starts further down than the one above it. */
+@keyframes reveal {
+  from { transform: translateY(calc((var(--i, 0) + 1) * 60px)); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes scroll-cue {
+  0%, 100% { opacity: 0.2; }
+  50%      { opacity: 0.7; }
+}
+
+@keyframes pulsate {
+  0%, 100% { opacity: 0.04; transform: translate(-50%, -50%) scale(1); }
+  50%      { opacity: 0.1;  transform: translate(-50%, -50%) scale(0.7); }
+}
+
+@keyframes skeleton-loading {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 0.9; }
+}
+
+/* Radix collapsible (timetable / FAQ) */
+@keyframes slide-down {
+  from { height: 0; opacity: 0; }
+  to   { height: var(--radix-accordion-content-height); opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { height: var(--radix-accordion-content-height); opacity: 1; }
+  to   { height: 0; opacity: 0; }
+}
+
+/* --------------------------------------------------------------------
+   SCROLL-REVEAL CONTRACT
+   Any element with [data-reveal] starts hidden and animates in when the
+   Reveal observer flips it to [data-reveal="in"]. Progressive
+   enhancement: with JS off, the `no-js` guard below keeps it visible.
+   -------------------------------------------------------------------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity var(--duration-base) var(--ease-out-sine) var(--delay),
+    transform var(--duration-base) var(--ease-out-quart) var(--delay);
+  will-change: opacity, transform;
+}
+
+[data-reveal='in'] {
+  opacity: 1;
+  transform: none;
+}
+
+[data-reveal-mask] {
+  overflow: hidden;
+  display: block;
+}
+
+[data-reveal-mask] > * {
+  display: block;
+  transform: translateY(100%);
+  transition: transform 0.9s var(--ease-out-quint) var(--delay);
+  will-change: transform;
+}
+
+[data-reveal-mask='in'] > * {
+  transform: translateY(0);
+}
+
+html.no-js [data-reveal],
+html.no-js [data-reveal-mask] > * {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal-mask] > * {
+    opacity: 1;
+    transform: none;
+  }
+}

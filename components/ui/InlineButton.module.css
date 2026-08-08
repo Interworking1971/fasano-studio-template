@@ -1,0 +1,53 @@
+.inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: var(--font-label-2);
+  color: var(--color-text-primary);
+}
+
+.inline:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+/*
+  Two 1px rules stacked in one background:
+    layer 1 — the incoming line, anchored left,  starts at 0 width
+    layer 2 — the resting line,  anchored right, starts at full width
+  On hover layer 2 collapses to the right while layer 1 grows from the
+  left, so the underline appears to be redrawn rather than just fading.
+*/
+.text {
+  background-image: linear-gradient(currentcolor, currentcolor),
+    linear-gradient(currentcolor, currentcolor);
+  background-position:
+    0% 100%,
+    100% 100%;
+  background-repeat: no-repeat;
+  background-size:
+    0% 1px,
+    100% 1px;
+  transition:
+    background-size 0.45s var(--ease-in-out-quart);
+  padding-bottom: 2px;
+}
+
+.inline:hover .text,
+.inline:focus-visible .text {
+  background-size:
+    100% 1px,
+    0% 1px;
+}
+
+.arrow {
+  width: 16px;
+  height: 12px;
+  flex: none;
+  transition: transform 0.45s var(--ease-out-quart);
+}
+
+.inline:hover .arrow,
+.inline:focus-visible .arrow {
+  transform: translateX(4px);
+}

@@ -1,0 +1,48 @@
+.secondary {
+  background-color: var(--color-background-primary);
+}
+
+.inner {
+  display: grid;
+  gap: 40px;
+}
+
+.mediaCol {
+  width: 100%;
+}
+
+.textCol {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title {
+  font: var(--font-display-2);
+  letter-spacing: -0.015em;
+  max-width: 16ch;
+}
+
+.body {
+  font: var(--font-body);
+  color: var(--color-text-secondary);
+  max-width: 46ch;
+}
+
+@media (min-width: 900px) {
+  .inner {
+    grid-template-columns: 5fr 6fr;
+    column-gap: calc(var(--gap) * 2);
+    align-items: center;
+  }
+
+  .textCol {
+    gap: 24px;
+  }
+
+  .title {
+    font: var(--font-display-3);
+    font-size: 3.25rem;
+    line-height: 1.05;
+  }
+}

@@ -1,0 +1,204 @@
+.footer {
+  background-color: var(--color-background-primary);
+  color: var(--color-text-primary);
+  padding-block: 100px 40px;
+}
+
+/* --------------------------------------------------------------------
+   EMAIL CAPTURE
+   -------------------------------------------------------------------- */
+.capture {
+  display: grid;
+  gap: 40px;
+  padding-bottom: 80px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.captureTitle {
+  font: var(--font-display-3);
+  max-width: 12ch;
+}
+
+.captureBody {
+  margin-top: 16px;
+  font: var(--font-body);
+  color: var(--color-text-secondary);
+  max-width: 42ch;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 16px;
+  align-self: end;
+}
+
+.field {
+  min-width: 0;
+}
+
+.submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding-inline: 24px;
+  font: var(--font-button);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-grey-900);
+  background-color: var(--color-bone-100);
+  border-radius: var(--radius-pill);
+  transition:
+    background-color 0.4s var(--ease-custom-1),
+    color 0.4s var(--ease-custom-1);
+}
+
+.submit svg {
+  width: 16px;
+  height: 12px;
+  transition: transform 0.4s var(--ease-out-quart);
+}
+
+.submit:hover {
+  background-color: var(--color-accent);
+  color: var(--color-bone-100);
+}
+
+.submit:hover svg {
+  transform: translateX(4px);
+}
+
+.status {
+  grid-column: 1 / -1;
+  min-height: 1.4em;
+  font: var(--font-tiny-1);
+  color: var(--color-text-secondary);
+}
+
+/* --------------------------------------------------------------------
+   COLUMNS
+   -------------------------------------------------------------------- */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  padding-block: 80px;
+}
+
+.brandCol {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.brandMark {
+  font: var(--font-display-5);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.address {
+  font: var(--font-tiny-1);
+  font-style: normal;
+  line-height: 1.9;
+  color: var(--color-text-secondary);
+}
+
+.contactLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.colTitle {
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-text-secondary);
+}
+
+.colList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.hours {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font: var(--font-tiny-1);
+}
+
+.hours li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--color-text-secondary);
+}
+
+.hoursTime {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-primary);
+}
+
+/* --------------------------------------------------------------------
+   CREDITS
+   -------------------------------------------------------------------- */
+.credits {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-line);
+  font: var(--font-tiny-2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.legal a:hover,
+.credit a:hover {
+  color: var(--color-text-primary);
+}
+
+.credit {
+  display: flex;
+  gap: 8px;
+}
+
+.creditLabel {
+  opacity: 0.6;
+}
+
+/* --------------------------------------------------------------------
+   BREAKPOINTS
+   -------------------------------------------------------------------- */
+@media (min-width: 768px) {
+  .capture {
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+  }
+
+  .grid {
+    grid-template-columns: 1.4fr repeat(4, 1fr);
+  }
+}

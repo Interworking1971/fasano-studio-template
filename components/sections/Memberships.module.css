@@ -1,0 +1,159 @@
+.memberships {
+  background-color: var(--color-background-primary);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 48px;
+}
+
+.title {
+  font: var(--font-display-2);
+}
+
+.grid {
+  display: grid;
+  gap: var(--gap);
+}
+
+.plan {
+  display: flex;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding: 32px 28px 28px;
+  border: 1px solid var(--color-line);
+  background-color: color-mix(in srgb, var(--color-bone-200) 55%, transparent);
+  transition:
+    border-color 0.5s var(--ease-out-quart),
+    transform 0.5s var(--ease-out-quart);
+}
+
+.card:hover {
+  border-color: var(--color-text-primary);
+}
+
+/* The featured plan is distinguished by surface, not by a coloured badge. */
+.card[data-featured='true'] {
+  background-color: var(--color-background-inverse);
+  border-color: var(--color-background-inverse);
+  color: var(--color-text-inverse);
+}
+
+.card[data-featured='true'] .period,
+.card[data-featured='true'] .body,
+.card[data-featured='true'] .includes li {
+  color: var(--color-grey-600);
+}
+
+.card[data-featured='true'] .includes li::before {
+  background-color: var(--color-accent);
+}
+
+.cardHead {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid currentcolor;
+  border-bottom-color: var(--color-line);
+}
+
+.name {
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.price {
+  font: var(--font-display-2);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.period {
+  font: var(--font-tiny-1);
+  color: var(--color-text-secondary);
+}
+
+.body {
+  font: var(--font-tiny-1);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.includes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 8px;
+  font: var(--font-tiny-1);
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+}
+
+.includes li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.includes li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 7px;
+  height: 1px;
+  background-color: var(--color-accent);
+}
+
+.cta {
+  margin-top: 12px;
+  width: 100%;
+}
+
+.note {
+  margin-top: 32px;
+  font: var(--font-tiny-1);
+  color: var(--color-text-secondary);
+  max-width: 60ch;
+}
+
+@media (min-width: 900px) {
+  .head {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-bottom: 64px;
+  }
+
+  .title {
+    font: var(--font-display-3);
+    font-size: 3.5rem;
+    text-align: right;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Lift the featured plan out of the row. */
+  .plan:nth-child(2) .card {
+    margin-block: -20px;
+    padding-block: 52px 48px;
+  }
+}

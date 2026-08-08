@@ -1,0 +1,115 @@
+.disciplines {
+  background-color: var(--color-background-primary);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 48px;
+}
+
+.title {
+  font: var(--font-display-2);
+  max-width: 18ch;
+}
+
+.list {
+  border-top: 1px solid var(--color-line);
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 20px;
+  row-gap: 6px;
+  padding: 26px 0 26px 16px;
+  border-bottom: 1px solid var(--color-line);
+  transition: padding-left 0.5s var(--ease-out-quart);
+}
+
+/* The accent rule that wipes in on hover. */
+.bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--color-accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.5s var(--ease-out-quart);
+}
+
+.row:hover .bar {
+  transform: scaleY(1);
+}
+
+.row:hover {
+  padding-left: 28px;
+}
+
+.num {
+  grid-row: 1;
+  font: var(--font-tiny-2);
+  letter-spacing: 0.2em;
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+  padding-top: 8px;
+}
+
+.name {
+  grid-row: 1;
+  font: var(--font-display-4);
+}
+
+.meta {
+  grid-column: 2;
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+}
+
+.body {
+  grid-column: 2;
+  font: var(--font-tiny-1);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  max-width: 52ch;
+}
+
+@media (min-width: 900px) {
+  .head {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-bottom: 64px;
+  }
+
+  .title {
+    font: var(--font-display-3);
+    font-size: 3.5rem;
+    text-align: right;
+    max-width: 14ch;
+  }
+
+  /* One row: number · name · meta · description. */
+  .row {
+    grid-template-columns: 56px 4fr 3fr 5fr;
+    align-items: baseline;
+    column-gap: var(--gap);
+    row-gap: 0;
+  }
+
+  .meta,
+  .body {
+    grid-column: auto;
+  }
+
+  .num {
+    padding-top: 0;
+  }
+}

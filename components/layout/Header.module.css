@@ -1,0 +1,232 @@
+.header {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: var(--z-header);
+  padding-inline: var(--gap);
+  transition:
+    transform 0.5s var(--ease-custom-1),
+    background-color 0.4s var(--ease-out-quart);
+}
+
+/* Hide on scroll down, restore on scroll up. */
+.header[data-hidden='true'] {
+  transform: translateY(-100%);
+}
+
+/* A faint plate once the hero is behind us, so nav stays legible. */
+.header[data-scrolled='true'] {
+  background-color: color-mix(in srgb, var(--color-background-primary) 88%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.header[data-menu-open='true'] {
+  background-color: transparent;
+  backdrop-filter: none;
+  color: var(--color-bone-100);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: var(--header-height);
+  border-bottom: 1px solid transparent;
+}
+
+.header[data-scrolled='true'] .bar {
+  border-bottom-color: var(--color-line);
+}
+
+/* --------------------------------------------------------------------
+   ENTRANCE — every direct child starts pushed down by (i+1) × 60px and
+   is released together, so the row settles like a stack of cards.
+   -------------------------------------------------------------------- */
+.logo,
+.navItem,
+.aside {
+  animation: reveal 1s var(--ease-out-quint) both;
+  animation-delay: calc(0.15s + var(--i, 0) * 0.04s);
+}
+
+/* --------------------------------------------------------------------
+   LOGO
+   -------------------------------------------------------------------- */
+.logo {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex: none;
+}
+
+.logoMark {
+  font: var(--font-display-5);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.logoPlace {
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-text-secondary);
+}
+
+.header[data-menu-open='true'] .logoPlace {
+  color: var(--color-grey-600);
+}
+
+/* --------------------------------------------------------------------
+   NAV
+   -------------------------------------------------------------------- */
+.nav {
+  display: none;
+  align-items: center;
+  gap: 32px;
+}
+
+.navItem {
+  display: inline-flex;
+}
+
+.aside {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: none;
+}
+
+.phone {
+  display: none;
+  font: var(--font-tiny-1);
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+  transition: color 0.3s var(--ease-out-quart);
+}
+
+.phone:hover {
+  color: var(--color-text-primary);
+}
+
+.headerCta {
+  display: none;
+}
+
+.menuToggle {
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  padding: 10px 0;
+  color: inherit;
+}
+
+.menuToggle:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+@media (min-width: 900px) {
+  .nav { display: flex; }
+  .phone { display: inline-flex; }
+  .headerCta { display: inline-flex; }
+  .menuToggle { display: none; }
+}
+
+/* --------------------------------------------------------------------
+   FULLSCREEN MENU
+   Clipped open from the top edge, links cascading in behind it.
+   -------------------------------------------------------------------- */
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-menu);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: calc(var(--header-height) + 40px) var(--gap) 40px;
+  background-color: var(--color-grey-900);
+  color: var(--color-bone-100);
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.7s var(--ease-in-out-quart);
+  pointer-events: none;
+  overflow-y: auto;
+}
+
+.menu[data-open='true'] {
+  clip-path: inset(0 0 0 0);
+  pointer-events: auto;
+}
+
+.menuNav {
+  display: flex;
+  flex-direction: column;
+}
+
+.menuLink {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding-block: 14px;
+  border-bottom: 1px solid var(--color-line-inverse);
+  overflow: hidden;
+}
+
+.menuIndex {
+  font: var(--font-tiny-2);
+  letter-spacing: 0.2em;
+  color: var(--color-grey-600);
+  transform: translateY(120%);
+  transition: transform 0.7s var(--ease-out-quint);
+  transition-delay: calc(0.18s + var(--i) * 0.06s);
+}
+
+.menuLabel {
+  font: var(--font-display-2);
+  transform: translateY(120%);
+  transition:
+    transform 0.7s var(--ease-out-quint),
+    color 0.3s var(--ease-out-quart);
+  transition-delay: calc(0.18s + var(--i) * 0.06s), 0s;
+}
+
+.menu[data-open='true'] .menuIndex,
+.menu[data-open='true'] .menuLabel {
+  transform: translateY(0);
+}
+
+.menuLink:hover .menuLabel {
+  color: var(--color-accent);
+}
+
+.menuFoot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 40px;
+  font: var(--font-tiny-1);
+  color: var(--color-grey-600);
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-out-sine) 0.5s;
+}
+
+.menu[data-open='true'] .menuFoot {
+  opacity: 1;
+}
+
+.menuContact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.menuContact a:hover {
+  color: var(--color-bone-100);
+}
+
+.menuAddress {
+  font-style: normal;
+  text-align: right;
+}

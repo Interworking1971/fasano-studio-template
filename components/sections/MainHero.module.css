@@ -1,0 +1,158 @@
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100lvh;
+  /* Bottom padding leaves a clear band for the scroll cue below the foot row. */
+  padding-block: calc(var(--header-height) + 40px) 104px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* --------------------------------------------------------------------
+   BACKGROUND
+   -------------------------------------------------------------------- */
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.bgParallax {
+  width: 100%;
+  height: 100%;
+}
+
+.bgMedia {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto !important;
+}
+
+.bgMedia img {
+  height: 100%;
+}
+
+/* Keeps the display type legible over any photograph the client supplies. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  /*
+    Heavy at the bottom where the copy sits, almost clear at the top so the
+    photograph (or the placeholder's grain) still reads as an image.
+  */
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--color-bone-100) 94%, transparent) 0%,
+    color-mix(in srgb, var(--color-bone-100) 78%, transparent) 30%,
+    color-mix(in srgb, var(--color-bone-100) 30%, transparent) 68%,
+    color-mix(in srgb, var(--color-bone-100) 12%, transparent) 100%
+  );
+}
+
+/* --------------------------------------------------------------------
+   TYPE
+   -------------------------------------------------------------------- */
+.inner {
+  position: relative;
+  z-index: var(--z-content);
+}
+
+.title {
+  font: var(--font-header);
+  letter-spacing: -0.02em;
+  max-width: 16ch;
+}
+
+/* Each row is its own mask; the child slides up from below the baseline. */
+.line {
+  display: block;
+  overflow: hidden;
+}
+
+.line > span {
+  display: block;
+  transform: translateY(110%);
+  animation: hero-line 1.15s var(--ease-out-quint) both;
+  animation-delay: calc(0.35s + var(--i) * 0.09s);
+}
+
+@keyframes hero-line {
+  from { transform: translateY(110%); }
+  to   { transform: translateY(0); }
+}
+
+.foot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+  margin-top: 40px;
+  animation: fade-in-up 1s 0.9s var(--ease-out-quart) both;
+}
+
+.standfirst {
+  font: var(--font-body);
+  max-width: 46ch;
+  color: var(--color-text-primary);
+}
+
+.cta {
+  flex: none;
+}
+
+/* --------------------------------------------------------------------
+   SCROLL CUE
+   -------------------------------------------------------------------- */
+.cue {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-content);
+  color: var(--color-text-primary);
+  animation: fade-in 1s 1.6s var(--ease-out-sine) both;
+  display: none;
+}
+
+/* --------------------------------------------------------------------
+   WATERMARK
+   The wordmark blown up and cropped by the bottom edge. It has to stay
+   below the copy band and read as texture, not as a second headline —
+   hence the deep crop and the very low opacity ceiling.
+   -------------------------------------------------------------------- */
+.watermark {
+  position: absolute;
+  left: 50%;
+  bottom: -0.36em;
+  transform: translateX(-50%);
+  z-index: -1;
+  font-family: var(--font-family-primary);
+  font-size: 21vw;
+  line-height: 0.8;
+  letter-spacing: 0.04em;
+  color: var(--color-text-primary);
+  opacity: 0.04;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  animation: pulsate-soft 16s ease-in-out 2s infinite;
+}
+
+@keyframes pulsate-soft {
+  0%, 100% { opacity: 0.035; }
+  50%      { opacity: 0.06; }
+}
+
+@media (min-width: 768px) {
+  .cue { display: block; }
+
+  .foot {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 60px;
+    margin-top: 56px;
+  }
+}

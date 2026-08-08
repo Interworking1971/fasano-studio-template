@@ -1,0 +1,53 @@
+.final {
+  background-color: var(--color-background-primary);
+  text-align: center;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.title {
+  display: block;
+  font: var(--font-display-1);
+  letter-spacing: -0.025em;
+}
+
+.body {
+  font: var(--font-body);
+  color: var(--color-text-secondary);
+  max-width: 46ch;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 12px;
+}
+
+.phone {
+  font: var(--font-tiny-1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+  transition: color 0.3s var(--ease-out-quart);
+}
+
+.phone:hover {
+  color: var(--color-text-primary);
+}
+
+@media (min-width: 768px) {
+  .actions {
+    flex-direction: row;
+    gap: 32px;
+  }
+}

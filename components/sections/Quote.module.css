@@ -1,0 +1,57 @@
+.quote {
+  background-color: var(--color-background-secondary);
+}
+
+.figure {
+  max-width: 1100px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.text {
+  position: relative;
+  font: var(--font-display-2);
+  font-style: italic;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.mark {
+  font-style: normal;
+  color: var(--color-accent);
+}
+
+.caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 40px;
+}
+
+.rule {
+  width: 40px;
+  height: 1px;
+  background-color: var(--color-line);
+  margin-bottom: 8px;
+}
+
+.name {
+  font: var(--font-label-2);
+}
+
+.role {
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-text-secondary);
+}
+
+@media (min-width: 900px) {
+  .text {
+    font: var(--font-display-3);
+    font-style: italic;
+    font-size: 3.75rem;
+    line-height: 1.1;
+  }
+}

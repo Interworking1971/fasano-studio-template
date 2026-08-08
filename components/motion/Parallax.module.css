@@ -1,0 +1,26 @@
+.parallax {
+  position: relative;
+  overflow: hidden;
+  /* Set on every frame by useScrollProgress. */
+  --scroll-progress: 0.5;
+}
+
+.inner {
+  width: 100%;
+  height: 100%;
+  /* Oversize so the translate never exposes an edge. */
+  scale: calc(1 + var(--speed) * 2);
+  transform: translate3d(
+    0,
+    calc((var(--scroll-progress) - 0.5) * var(--speed) * 100% * var(--parallax-direction)),
+    0
+  );
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inner {
+    scale: 1;
+    transform: none;
+  }
+}

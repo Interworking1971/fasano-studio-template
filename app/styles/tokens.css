@@ -1,0 +1,185 @@
+/* ==========================================================================
+   DESIGN TOKENS
+   --------------------------------------------------------------------------
+   The single source of truth for the whole template.
+
+   Re-skinning for a new client is a two-file job:
+     1. this file          → colour, type, rhythm
+     2. /content/site.ts   → every word, link and image slot
+
+   Nothing below is component-specific. Components only ever consume tokens.
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------
+     1. PALETTE — raw values. Never referenced directly by components.
+     ------------------------------------------------------------------ */
+  --color-white: #fff;
+  --color-black: #000;
+
+  /* Warm limestone neutrals — Puglia trulli white / tufo stone */
+  --color-bone-100: #f4f1ec;
+  --color-bone-200: #ece7df;
+  --color-bone-300: #e0d5c7;
+
+  --color-grey-100: #f8f8f8;
+  --color-grey-300: #d9d9d9;
+  --color-grey-600: #97928b;
+  --color-grey-900: #171614;
+
+  /* Accents */
+  --color-clay: #b4552d;   /* terracotta — primary accent */
+  --color-olive: #5c5f4a;  /* uliveto green — secondary accent */
+  --color-red: #9d1414;
+  --color-orange: #e97e00;
+
+  /* ------------------------------------------------------------------
+     2. SEMANTIC COLOUR — what components actually use.
+     ------------------------------------------------------------------ */
+  --color-background-primary: var(--color-bone-100);
+  --color-background-secondary: var(--color-bone-300);
+  --color-background-inverse: var(--color-grey-900);
+
+  --color-text-primary: var(--color-grey-900);
+  --color-text-secondary: var(--color-grey-600);
+  --color-text-inverse: var(--color-bone-100);
+
+  --color-line: rgb(23 22 20 / 14%);
+  --color-line-inverse: rgb(244 241 236 / 20%);
+
+  --color-accent: var(--color-clay);
+  --color-error: var(--color-red);
+  --icon-color: var(--color-text-primary);
+
+  /* ------------------------------------------------------------------
+     3. TYPEFACES
+     --font-serif / --font-sans are injected by next/font in layout.tsx.
+     ------------------------------------------------------------------ */
+  --font-family-primary: var(--font-serif), Georgia, 'Times New Roman', Garamond, serif;
+  --font-family-content: var(--font-sans), 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+
+  /* ------------------------------------------------------------------
+     4. TYPE SCALE — mobile first. Each token is a full `font` shorthand,
+        so a component sets `font: var(--font-display-2)` and is done.
+     ------------------------------------------------------------------ */
+  --font-header:     var(--font-weight-regular) clamp(46px, 6.5vw, 120px) / 1 var(--font-family-primary);
+  --font-display-1:  var(--font-weight-regular) 2.875rem / 1.1 var(--font-family-primary);
+  --font-display-2:  var(--font-weight-regular) 2.1875rem / 1 var(--font-family-primary);
+  --font-display-3:  var(--font-weight-regular) 1.5625rem / 1.3 var(--font-family-primary);
+  --font-display-4:  var(--font-weight-medium) 1.25rem / 1.15 var(--font-family-content);
+  --font-display-5:  var(--font-weight-regular) 1.125rem / 1.5 var(--font-family-primary);
+
+  --font-body:       var(--font-weight-regular) 1.125rem / 1.5 var(--font-family-content);
+  --font-button:     var(--font-weight-regular) 0.9375rem / 1 var(--font-family-content);
+  --font-label-1:    var(--font-weight-regular) 1rem / 1.1 var(--font-family-primary);
+  --font-label-2:    var(--font-weight-medium) 0.9375rem / 1.5 var(--font-family-content);
+  --font-label-form: var(--font-weight-regular) 0.9375rem / 1 var(--font-family-content);
+  --font-tiny-1:     var(--font-weight-regular) 0.8125rem / 1.6 var(--font-family-content);
+  --font-tiny-2:     var(--font-weight-regular) 0.625rem / 1.4 var(--font-family-content);
+
+  /* ------------------------------------------------------------------
+     5. GRID & RHYTHM
+     ------------------------------------------------------------------ */
+  --grid-columns: 2;
+  --grid-gap: 10px;
+  --gap: 20px;
+  --section-gap: 100px;
+  --header-height: 68px;
+  --radius: 0px;         /* the system is deliberately square */
+  --radius-pill: 999px;
+
+  /* ------------------------------------------------------------------
+     6. EASINGS — the full Penner set. Motion never uses a bare
+        `ease` / `ease-in-out`; it always names an intent.
+     ------------------------------------------------------------------ */
+  --ease-in-sine:      cubic-bezier(0.12, 0, 0.39, 0);
+  --ease-out-sine:     cubic-bezier(0.61, 1, 0.88, 1);
+  --ease-in-quad:      cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  --ease-out-quad:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-in-out-quad:  cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  --ease-in-cubic:     cubic-bezier(0.32, 0, 0.67, 0);
+  --ease-out-cubic:    cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-in-quart:     cubic-bezier(0.5, 0, 0.75, 0);
+  --ease-out-quart:    cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-in-quint:     cubic-bezier(0.64, 0, 0.78, 0);
+  --ease-out-quint:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+  --ease-out-expo:     cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out-expo:  cubic-bezier(0.87, 0, 0.13, 1);
+  --ease-in-out-circ:  cubic-bezier(0.85, 0, 0.15, 1);
+  --ease-custom-1:         cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-custom-1-reverse: cubic-bezier(0.75, 0, 0.75, 0.9);
+
+  /* ------------------------------------------------------------------
+     7. MOTION DEFAULTS
+        --index is set per-item by components to stagger children.
+     ------------------------------------------------------------------ */
+  --index: 0;
+  --delay: calc(var(--index) * 80ms);
+  --stagger: 0.1s;
+  --duration-fast: 0.3s;
+  --duration-base: 0.6s;
+  --duration-slow: 1s;
+
+  /* Loader keyhole geometry (see Loader.module.css) */
+  --hole-ratio: calc(100lvh / 100vw);
+  --hole-w: 15.6vw;
+  --hole-h: calc(15.6vw * var(--hole-ratio));
+
+  /* Set by ScrollProgress on scroll-driven sections */
+  --scroll-progress: 0;
+  --parallax-direction: 1px;
+
+  /* Stacking */
+  --z-media: 1;
+  --z-content: 2;
+  --z-header: 80;
+  --z-menu: 90;
+  --z-loader: 100;
+}
+
+/* --------------------------------------------------------------------
+   TABLET / DESKTOP — the type scale steps up, the grid opens to 12 cols.
+   -------------------------------------------------------------------- */
+@media (min-width: 768px) {
+  :root {
+    --grid-columns: 12;
+    --gap: 30px;
+    --section-gap: 160px;
+    --header-height: 84px;
+
+    --font-header:    var(--font-weight-regular) clamp(46px, 5vw, 120px) / 1 var(--font-family-primary);
+    --font-display-1: var(--font-weight-regular) 7.5rem / 1 var(--font-family-primary);
+    --font-display-2: var(--font-weight-regular) 2.5rem / 1 var(--font-family-primary);
+    --font-display-3: var(--font-weight-regular) 5rem / 1 var(--font-family-primary);
+    --font-display-4: var(--font-weight-medium) 1.875rem / 1.06 var(--font-family-content);
+    --font-display-5: var(--font-weight-regular) 1.3125rem / 1 var(--font-family-primary);
+    --font-label-1:   var(--font-weight-regular) 1.125rem / 1.1 var(--font-family-primary);
+    --font-label-2:   var(--font-weight-medium) 1.125rem / 1.5 var(--font-family-content);
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --gap: 40px;
+    --section-gap: 200px;
+  }
+}
+
+/* --------------------------------------------------------------------
+   INVERTED SURFACE — drop `data-theme="dark"` on any section and every
+   token below it flips. Used by the Loader, the menu and the footer.
+   -------------------------------------------------------------------- */
+[data-theme='dark'] {
+  --color-background-primary: var(--color-grey-900);
+  --color-background-secondary: #221f1c;
+  --color-text-primary: var(--color-bone-100);
+  --color-text-secondary: var(--color-grey-600);
+  --color-line: var(--color-line-inverse);
+  --icon-color: var(--color-bone-100);
+}

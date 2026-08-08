@@ -1,0 +1,139 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-loader);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------
+   THE PLATE
+   An opaque sheet with a hole cut in it. The hole is mask layer 1; the
+   sheet is mask layer 2; `exclude` subtracts one from the other. Growing
+   layer 1's mask-size is what opens the window.
+
+   The hole keeps the viewport's own aspect ratio (--hole-ratio), so the
+   final expansion lands exactly on the screen edges with no distortion.
+   -------------------------------------------------------------------- */
+.plate {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-grey-900);
+
+  --mask-layers: linear-gradient(#000, #000), linear-gradient(#000, #000);
+
+  -webkit-mask-image: var(--mask-layers);
+  mask-image: var(--mask-layers);
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-size: 0 0, 100% 100%;
+  mask-size: 0 0, 100% 100%;
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+[data-state='running'] .plate {
+  animation:
+    mask-expand 1.4s 0.55s var(--ease-in-out-quint) both,
+    mask-full 0.75s 1.95s var(--ease-in-out-quart) both;
+}
+
+/* Beat 1 — nothing, then a viewport-shaped keyhole. */
+@keyframes mask-expand {
+  from {
+    -webkit-mask-size: 0 0, 100% 100%;
+    mask-size: 0 0, 100% 100%;
+  }
+  to {
+    -webkit-mask-size: var(--hole-w) var(--hole-h), 100% 100%;
+    mask-size: var(--hole-w) var(--hole-h), 100% 100%;
+  }
+}
+
+/* Beat 2 — the keyhole becomes the whole screen. */
+@keyframes mask-full {
+  from {
+    -webkit-mask-size: var(--hole-w) var(--hole-h), 100% 100%;
+    mask-size: var(--hole-w) var(--hole-h), 100% 100%;
+  }
+  to {
+    -webkit-mask-size: 100% 100%, 100% 100%;
+    mask-size: 100% 100%, 100% 100%;
+  }
+}
+
+/* --------------------------------------------------------------------
+   THE WORDMARK
+   Sits on the plate, so it is clipped away by the same mask expansion.
+   -------------------------------------------------------------------- */
+.center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--color-bone-100);
+  mix-blend-mode: difference;
+}
+
+.kicker {
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  opacity: 0;
+}
+
+.word {
+  font: var(--font-display-2);
+  letter-spacing: 0.18em;
+  opacity: 0;
+}
+
+[data-state='running'] .kicker {
+  animation:
+    fade-in 0.7s 0.15s var(--ease-out-sine) both,
+    loader-out 0.5s 1.75s var(--ease-in-quint) both;
+}
+
+[data-state='running'] .word {
+  animation:
+    loader-in 0.9s 0.25s var(--ease-out-quint) both,
+    loader-out 0.5s 1.7s var(--ease-in-quint) both;
+}
+
+@keyframes loader-in {
+  from { opacity: 0; transform: translateY(18px); letter-spacing: 0.4em; }
+  to   { opacity: 1; transform: translateY(0);    letter-spacing: 0.18em; }
+}
+
+@keyframes loader-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-14px); }
+}
+
+/* --------------------------------------------------------------------
+   Browsers without mask-composite still get a clean fade-out rather than
+   a plate stuck on screen.
+   -------------------------------------------------------------------- */
+@supports not ((mask-composite: exclude) or (-webkit-mask-composite: xor)) {
+  .plate {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  [data-state='running'] .plate {
+    animation: fade-out-plate 0.6s 1.9s var(--ease-in-out-quart) both;
+  }
+
+  @keyframes fade-out-plate {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader { display: none; }
+}

@@ -1,0 +1,41 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.label {
+  font: var(--font-label-form);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-text-secondary);
+}
+
+.input {
+  width: 100%;
+  padding-block: 12px;
+  font: var(--font-body);
+  color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-line);
+  transition: border-color 0.35s var(--ease-out-quart);
+}
+
+.input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+}
+
+.input:focus {
+  outline: none;
+  border-bottom-color: var(--color-text-primary);
+}
+
+.field[data-error='true'] .input {
+  border-bottom-color: var(--color-error);
+}
+
+.error {
+  font: var(--font-tiny-1);
+  color: var(--color-error);
+}

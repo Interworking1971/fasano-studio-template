@@ -85,12 +85,48 @@ body {
   font-style: italic;
 }
 
-/* A small uppercase sans eyebrow above display type. */
+/*
+  Eyebrow — SERIF, centred, mixing italic connectives with roman caps:
+  "<i>the</i> ESSENCE <i>of</i> VERO". Not uppercase sans on wide tracking,
+  which is the obvious guess and the wrong one.
+*/
 .eyebrow {
-  font: var(--font-tiny-1);
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--color-text-secondary);
+  font: var(--font-display-5);
+  font-size: 0.9375rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: var(--color-text-primary);
+}
+
+.eyebrow i,
+.eyebrow em {
+  font-style: italic;
+}
+
+/*
+  Editorial body — serif, 16px, tight 1.1 leading, positive tracking,
+  centred. Distinct from --font-body, which is the sans used for UI and
+  forms. Measured from the live build.
+*/
+.prose {
+  font-family: var(--font-family-primary);
+  font-size: 1rem;
+  font-weight: var(--font-weight-regular);
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.prose i,
+.prose em {
+  font-style: italic;
+}
+
+/* Section heading — SANS, 30px, weight 500, negative tracking, centred. */
+.sectionHeading {
+  font: var(--font-display-4);
+  letter-spacing: -0.02em;
+  text-align: center;
 }
 
 .muted { color: var(--color-text-secondary); }

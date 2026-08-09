@@ -1,232 +1,330 @@
+/* ==========================================================================
+   HEADER
+   Three-column grid, wordmark centred. Measured from the live build.
+   ========================================================================== */
+
 .header {
   position: fixed;
-  inset-inline: 0;
   top: 0;
-  z-index: var(--z-header);
+  left: 0;
+  right: 0;
+  z-index: 299;
+  padding-top: 30px;
   padding-inline: var(--gap);
-  transition:
-    transform 0.5s var(--ease-custom-1),
-    background-color 0.4s var(--ease-out-quart);
+  /* Fades in once the intro has cleared. */
+  opacity: 0;
+  animation: header-in 1s 0.4s var(--ease-custom-1) forwards;
 }
 
-/* Hide on scroll down, restore on scroll up. */
-.header[data-hidden='true'] {
-  transform: translateY(-100%);
+@keyframes header-in {
+  to { opacity: 1; }
 }
 
-/* A faint plate once the hero is behind us, so nav stays legible. */
-.header[data-scrolled='true'] {
-  background-color: color-mix(in srgb, var(--color-background-primary) 88%, transparent);
-  backdrop-filter: blur(10px);
-}
+/*
+  The header sits over a dark hero and then over cream sections. The
+  reference swaps `theme-dark`/`theme-light` classes from JS; `difference`
+  gets the same result declaratively — white against dark, ink against
+  cream — with no scroll listener and nothing to keep in sync.
 
-.header[data-menu-open='true'] {
-  background-color: transparent;
-  backdrop-filter: none;
-  color: var(--color-bone-100);
-}
-
-.bar {
-  display: flex;
+  Turned off while the menu is open, where the surface is known.
+*/
+.top {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  height: var(--header-height);
-  border-bottom: 1px solid transparent;
+  color: #fff;
+  mix-blend-mode: difference;
 }
 
-.header[data-scrolled='true'] .bar {
-  border-bottom-color: var(--color-line);
+.header[data-open='true'] .top {
+  color: var(--color-text-primary);
+  mix-blend-mode: normal;
 }
 
 /* --------------------------------------------------------------------
-   ENTRANCE — every direct child starts pushed down by (i+1) × 60px and
-   is released together, so the row settles like a stack of cards.
+   TRIGGER — two-axis text roll on hover.
    -------------------------------------------------------------------- */
-.logo,
-.navItem,
-.aside {
-  animation: reveal 1s var(--ease-out-quint) both;
-  animation-delay: calc(0.15s + var(--i, 0) * 0.04s);
+.trigger {
+  position: relative;
+  z-index: 99;
+  justify-self: start;
+  text-transform: uppercase;
+  font: var(--font-button);
+  letter-spacing: 0.06em;
+  color: inherit;
+  transition:
+    color 0.3s var(--ease-custom-1),
+    background-color 0.3s var(--ease-custom-1);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.inner {
+  display: inline-flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.menuText {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  overflow: hidden;
+}
+
+.label {
+  display: inline-block;
+  will-change: transform;
+  transition: transform 0.8s var(--ease-out-quint);
+}
+
+/*
+  The incoming copy arrives from the left over 1s while the label leaves
+  upward over 0.8s. The mismatch is intentional.
+*/
+.copy {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  padding: 0 10px;
+  color: inherit;
+  transform: translateY(150%);
+  will-change: transform;
+  transition: transform 1s var(--ease-out-quint);
+}
+
+@media (min-width: 930px) {
+  .trigger {
+    display: flex;
+    gap: 4px;
+    min-width: 130px;
+  }
+
+  .trigger:hover .label {
+    transform: translateY(-100%);
+  }
+
+  .trigger:hover .copy {
+    transform: translate(10px);
+  }
 }
 
 /* --------------------------------------------------------------------
-   LOGO
+   WORDMARK — 88×28, centred by auto margins.
    -------------------------------------------------------------------- */
 .logo {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
-  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 28px;
+  margin: auto;
+  transition: opacity 0.1s var(--ease-custom-1);
 }
 
-.logoMark {
+.brandMark {
   font: var(--font-display-5);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-}
-
-.logoPlace {
-  font: var(--font-tiny-1);
-  text-transform: uppercase;
+  font-size: 1.25rem;
   letter-spacing: 0.16em;
-  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  color: inherit;
 }
 
-.header[data-menu-open='true'] .logoPlace {
-  color: var(--color-grey-600);
+.header[data-open='true'] .brandMark,
+.header[data-open='true'] .trigger {
+  color: var(--color-text-primary);
 }
 
 /* --------------------------------------------------------------------
-   NAV
+   CTA
    -------------------------------------------------------------------- */
-.nav {
-  display: none;
-  align-items: center;
-  gap: 32px;
-}
-
-.navItem {
-  display: inline-flex;
-}
-
 .aside {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex: none;
-}
-
-.phone {
-  display: none;
-  font: var(--font-tiny-1);
-  letter-spacing: 0.06em;
-  font-variant-numeric: tabular-nums;
-  color: var(--color-text-secondary);
-  transition: color 0.3s var(--ease-out-quart);
-}
-
-.phone:hover {
-  color: var(--color-text-primary);
+  justify-self: end;
 }
 
 .headerCta {
   display: none;
 }
 
-.menuToggle {
-  font: var(--font-tiny-1);
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  padding: 10px 0;
-  color: inherit;
-}
-
-.menuToggle:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 4px;
-}
-
-@media (min-width: 900px) {
-  .nav { display: flex; }
-  .phone { display: inline-flex; }
+@media (min-width: 930px) {
   .headerCta { display: inline-flex; }
-  .menuToggle { display: none; }
 }
 
 /* --------------------------------------------------------------------
    FULLSCREEN MENU
-   Clipped open from the top edge, links cascading in behind it.
+   Scales open from the top edge. Links are at header scale.
    -------------------------------------------------------------------- */
-.menu {
+.content {
   position: fixed;
-  inset: 0;
-  z-index: var(--z-menu);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: calc(var(--header-height) + 40px) var(--gap) 40px;
-  background-color: var(--color-grey-900);
-  color: var(--color-bone-100);
-  clip-path: inset(0 0 100% 0);
-  transition: clip-path 0.7s var(--ease-in-out-quart);
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 290;
+  max-height: 100%;
+  overflow: hidden;
+  transform-origin: top;
+  transform: scaleY(0);
   pointer-events: none;
-  overflow-y: auto;
+  transition: transform 0.8s var(--ease-in-out-quart);
 }
 
-.menu[data-open='true'] {
-  clip-path: inset(0 0 0 0);
+.content[data-open='true'] {
+  transform: scaleY(1);
   pointer-events: auto;
 }
 
-.menuNav {
+.content::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--color-bone-100);
+  transform-origin: top;
+}
+
+.overflow {
+  max-height: 100svh;
+  overflow: auto;
+}
+
+.wrapper {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  padding: 125px var(--gap) 20px;
+  overflow: hidden;
+}
+
+/*
+  Two large circles of accent at 4%, drifting on a 16s loop. Ambient
+  warmth behind the links — never a visible shape.
+*/
+.wrapper::before,
+.wrapper::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  opacity: 0.04;
+  transform: translate(-50%, -50%);
+}
+
+.wrapper::after {
+  width: 0%;
+  top: 35%;
+  left: 0%;
+  animation: pulsate 16s ease-in-out infinite;
+}
+
+.wrapper::before {
+  width: 100%;
+  top: 50%;
+  left: 110%;
+  animation: pulsate 16s ease-in-out 2s infinite;
+}
+
+@media (min-width: 930px) {
+  .wrapper {
+    grid-template-rows: auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+
+  .wrapper::before {
+    width: 40%;
+    top: 25%;
+    left: 100%;
+  }
+}
+
+/* --------------------------------------------------------------------
+   LINKS — header scale, masked, cascading.
+   -------------------------------------------------------------------- */
+.primary {
   display: flex;
   flex-direction: column;
 }
 
-.menuLink {
-  display: flex;
-  align-items: baseline;
-  gap: 18px;
-  padding-block: 14px;
-  border-bottom: 1px solid var(--color-line-inverse);
-  overflow: hidden;
+.link {
+  font: var(--font-header);
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+  transition: opacity 0.4s var(--ease-out-quart);
 }
 
-.menuIndex {
-  font: var(--font-tiny-2);
-  letter-spacing: 0.2em;
-  color: var(--color-grey-600);
-  transform: translateY(120%);
-  transition: transform 0.7s var(--ease-out-quint);
-  transition-delay: calc(0.18s + var(--i) * 0.06s);
+.primary:hover .link {
+  opacity: 0.35;
 }
 
-.menuLabel {
-  font: var(--font-display-2);
-  transform: translateY(120%);
-  transition:
-    transform 0.7s var(--ease-out-quint),
-    color 0.3s var(--ease-out-quart);
-  transition-delay: calc(0.18s + var(--i) * 0.06s), 0s;
-}
-
-.menu[data-open='true'] .menuIndex,
-.menu[data-open='true'] .menuLabel {
-  transform: translateY(0);
-}
-
-.menuLink:hover .menuLabel {
-  color: var(--color-accent);
-}
-
-.menuFoot {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 24px;
-  padding-top: 40px;
-  font: var(--font-tiny-1);
-  color: var(--color-grey-600);
-  opacity: 0;
-  transition: opacity 0.5s var(--ease-out-sine) 0.5s;
-}
-
-.menu[data-open='true'] .menuFoot {
+.primary .link:hover {
   opacity: 1;
 }
 
-.menuContact {
+.linkMask {
+  display: block;
+  overflow: hidden;
+}
+
+.linkLabel {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 0.9s var(--ease-out-quint);
+  transition-delay: calc(0.1s + var(--i) * 0.06s);
+}
+
+.content[data-open='true'] .linkLabel {
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------
+   SECONDARY COLUMN
+   -------------------------------------------------------------------- */
+.secondary {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font: var(--font-display-5);
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-out-sine) 0.45s;
+}
+
+.content[data-open='true'] .secondary {
+  opacity: 1;
+}
+
+.contact {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.menuContact a:hover {
-  color: var(--color-bone-100);
+.address {
+  font-style: normal;
+  color: var(--color-text-secondary);
 }
 
-.menuAddress {
-  font-style: normal;
-  text-align: right;
+.legals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font: var(--font-tiny-1);
+  color: var(--color-text-secondary);
+}
+
+.legals a:hover,
+.contact a:hover {
+  color: var(--color-text-primary);
 }

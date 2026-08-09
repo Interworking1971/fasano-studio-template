@@ -53,35 +53,6 @@
 }
 
 /* --------------------------------------------------------------------
-   WORDMARK — fixed to the top-left, at measured sizes.
-   -------------------------------------------------------------------- */
-.brand {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 89;
-  display: flex;
-  align-items: center;
-  width: 230px;
-  height: 70px;
-  padding-left: var(--gap);
-  font: var(--font-display-5);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--color-bone-100);
-  mix-blend-mode: difference;
-  pointer-events: none;
-}
-
-@media (min-width: 930px) {
-  .brand { width: 250px; height: 75px; }
-}
-
-@media (min-width: 1728px) {
-  .brand { width: 290px; height: 90px; }
-}
-
-/* --------------------------------------------------------------------
    CONTENT — fixed and centred, so it holds still inside the closing mask.
    -------------------------------------------------------------------- */
 .content {

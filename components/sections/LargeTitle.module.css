@@ -1,53 +1,84 @@
+/* ==========================================================================
+   GIANT STATEMENT
+   Cream ground, centred two-line statement mixing italic and roman, with a
+   media plate laid over the type. The overlap is deliberate: the plate
+   occludes the second line rather than sitting behind it.
+   ========================================================================== */
+
 .largeTitle {
   position: relative;
-  display: grid;
-  place-items: center;
-  min-height: 78lvh;
-  padding-block: 120px;
+  background-color: var(--color-background-primary);
+  padding-block: var(--section-gap);
   overflow: hidden;
-  isolation: isolate;
-  color: var(--color-bone-100);
-}
-
-.mediaWrap {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-color: var(--color-grey-900);
-}
-
-.parallax {
-  width: 100%;
-  height: 100%;
-}
-
-.media {
-  width: 100%;
-  height: 100%;
-  aspect-ratio: auto !important;
-}
-
-.media img {
-  height: 100%;
-}
-
-.scrim {
-  position: absolute;
-  inset: 0;
-  background-color: color-mix(in srgb, var(--color-grey-900) 52%, transparent);
 }
 
 .inner {
   position: relative;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.eyebrow {
+  margin-bottom: 40px;
+}
+
+/* --------------------------------------------------------------------
+   THE STATEMENT
+   Fluid to ~110px. Line height 1 so the two lines lock together and the
+   plate can sit across the join.
+   -------------------------------------------------------------------- */
 .title {
-  display: block;
-  font: var(--font-display-1);
-  letter-spacing: -0.025em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-regular);
+  font-size: clamp(2.5rem, 7.3vw, 6.875rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
 }
 
 .line {
   display: block;
+  white-space: nowrap;
+}
+
+/* Italic connectives stay lowercase; the roman nouns are caps. */
+.em {
+  font-style: italic;
+  text-transform: none;
+}
+
+/* --------------------------------------------------------------------
+   THE PLATE
+   Pulled up over the second line. Negative margin rather than absolute
+   positioning, so the section still grows with its content.
+   -------------------------------------------------------------------- */
+.plate {
+  position: relative;
+  z-index: 2;
+  width: min(60%, 460px);
+  margin-top: -8%;
+}
+
+@media (min-width: 930px) {
+  .eyebrow {
+    margin-bottom: 56px;
+  }
+
+  .plate {
+    width: min(30%, 445px);
+    /* Overlaps roughly the lower half of the statement. */
+    margin-top: -6.5%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plate {
+    margin-top: 24px;
+  }
 }

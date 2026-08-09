@@ -1,6 +1,5 @@
 'use client'
 
-import { site } from '@/content/site'
 import { home } from '@/content/home'
 import Media from '@/components/ui/Media'
 import ScrollCue from '@/components/ui/ScrollCue'
@@ -29,7 +28,6 @@ import styles from './MainHero.module.css'
  */
 export default function MainHero() {
   const { hero } = home
-  const { brand } = site
 
   // 0 → 1 across the hero's own height; drives the clip-path in CSS.
   const ref = useScrollProgress<HTMLElement>({
@@ -46,10 +44,6 @@ export default function MainHero() {
           <Media slot={hero.background} priority tone="dark" className={styles.mediaInner} />
         </div>
       </div>
-
-      <span className={styles.brand} aria-hidden="true">
-        {brand.name}
-      </span>
 
       <div className={styles.content}>
         <h1 className={styles.title}>

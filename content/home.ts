@@ -45,10 +45,18 @@ export const home = {
     ],
   },
 
+  /*
+    The giant statement. Italic runs are the joining words, roman caps are
+    the subject — "<i>where</i> INNOVATION / <i>meets</i> CRAFTSMANSHIP".
+    Keep each line short: it sets at up to ~110px on one line, nowrap.
+  */
   largeTitle: {
-    line1: 'Made once.',
-    line2Em: 'Never meant to end.',
-    media: media('Wide band · 21:9', '21 / 9', 'The studio floor'),
+    eyebrow: { lead: 'the', roman: 'ESSENCE', tail: 'of', subject: 'STUDIO' },
+    line1Em: 'where',
+    line1: 'INNOVATION',
+    line2Em: 'meets',
+    line2: 'CRAFTSMANSHIP',
+    media: media('Statement plate · 4:3', '4 / 3', 'A finished piece'),
   },
 
   bulletPoints: {

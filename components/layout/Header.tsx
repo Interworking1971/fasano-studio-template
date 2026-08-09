@@ -56,7 +56,7 @@ export default function Header() {
             <a href={site.contact.phoneHref} className={styles.phone}>
               {site.contact.phone}
             </a>
-            <Button href={site.nav.cta.href} variant="outline" className={styles.headerCta}>
+            <Button href={site.nav.cta.href} variant="plain" className={styles.headerCta}>
               {site.nav.cta.label}
             </Button>
             <button

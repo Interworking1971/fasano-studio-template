@@ -50,7 +50,7 @@ export function DiptychSticky() {
             </Reveal>
 
             <Reveal index={4}>
-              <Button href={d.cta.href} variant="outline">
+              <Button href={d.cta.href} variant="plain">
                 {d.cta.label}
               </Button>
             </Reveal>

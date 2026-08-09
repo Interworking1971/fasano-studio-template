@@ -27,11 +27,12 @@ layout. This list matters more than everything below it.
 
 | Never | Instead |
 |---|---|
-| Rounded corners on containers, images, cards | **`border-radius: 0`** everywhere. Only pill buttons are round (`999px`) |
+| Rounded corners on containers, images, cards, buttons | **`border-radius: 0`** everywhere. Nothing in this system is round |
 | Box shadows, elevation, glows | Separation comes from **hairline 1px rules** and background tint changes |
 | Cards — bordered boxes holding a title + text + button | **Ruled rows.** Items separated by 1px lines, no enclosure |
 | Everything centred | Predominantly **left-aligned**. Centre only: pull quote, dark edito band, final CTA |
 | Gradient buttons, coloured fills, vivid accents | Accent is used at **hairline scale only** — a 3px bar, a rule, one word |
+| **Pill buttons, uppercase sans buttons** | Buttons are **square, serif, sentence case**, with no border and no background at rest — see §7 |
 | Emoji, icon badges, "✨ Feature" chips | Nothing. Numbers (`01`, `02`) if you need enumeration |
 | Uniform grids of equal tiles | **Uneven spans and vertical offsets.** No two adjacent cells the same height |
 | Big bold sans headlines | **Serif** for all display type. Sans never exceeds 1.875rem |
@@ -143,8 +144,10 @@ is constrained.
 centre-scaling `clip-path` driven by scroll (see §6). Content is
 `position: fixed`, flex column, **centred both axes**, `gap: 32px` → 18px
 (≥930) → 21px (≥1728). The title is **`--font-display-5` — small**, not a
-giant headline. Logo is `position: fixed`, top-left, 230×70 → 250×75 (≥930) →
-290×90 (≥1728). Scroll cue absolute, `bottom: 28px`, centred.
+giant headline. The wordmark is a fixed SVG that starts large and centred in
+the hero and **scales to ~35% as it travels up into the header** on scroll,
+flipping fill between `theme-dark` and `theme-light` against whatever is
+behind it. Scroll cue absolute, `bottom: 28px`, centred.
 
 **2 · Statement** — eyebrow, two-line serif claim (second line italic), body
 paragraph, inline link. Left column only, ~14ch measure on the heading.
@@ -218,9 +221,20 @@ clip-path: polygon(
 );
 ```
 
-**Intro overlay.** A two-layer CSS mask with `exclude` compositing punches a
-viewport-shaped window through an opaque plate and grows it in two beats
-(1.4s `in-out-quint`, then 0.75s `in-out-quart`). Once per session.
+**Intro overlay.** A **light beige** plate — not dark. Four display lines sit
+above and below centre, set enormous (fluid to 120/130px). They fade to 14%
+while a two-layer CSS mask with `exclude` compositing punches a
+viewport-shaped window through the plate and grows it (1.4s at 0.5s,
+`in-out-quint`), the content layer's clip-path opening a matching notch in
+step. From 1.5s the lines carry on to **full opacity**. On completion the
+window expands to full bleed (0.75s `in-out-quart`) while the lines slide off
+by ∓25%. A hairline progress rule sits at `bottom: 30px` with a percentage
+that travels the viewport width. Once per session.
+
+**Wordmark travel.** The logo is an **SVG**, `position: fixed`, driven by JS
+with a matrix transform — it starts large and centred in the hero and scales
+to ~35% as it travels up into the header. It also carries a `theme-dark` /
+`theme-light` class that flips its fill against whatever is behind it.
 
 **Underline gesture.** Links carry two stacked 1px background layers; on hover
 the resting rule collapses right while a new one grows from the left, so the
@@ -232,10 +246,20 @@ Everything degrades to static under `prefers-reduced-motion`.
 
 ## 7. Components
 
-**Button** — pill (`999px`), uppercase, `--font-button`, 48px (`md`) / 58px
-(`lg`). Hover is a fill that **wipes up from the bottom edge** via
-`scaleY(0→1)` on `--ease-custom-1`, label crossfading to inverse. Variants:
-`solid`, `outline`, `ghost`. No shadow, no gradient, no icon by default.
+**Button** — **square** (`border-radius: 0`), **serif** `--font-button`
+(0.9375rem), `letter-spacing: 0.06em`, **sentence case**. No border and no
+background of its own; minimum 45×45 with 10px padding.
+
+A `::after` plate grows from `scaleY(0)`, `transform-origin: bottom`, on
+`transform 1s var(--ease-out-expo)` — that is an **entrance**, fired when the
+button becomes visible, not a hover.
+
+Hover is a **vertical text roll**: the label lifts by `calc(-100% - 0.4em)`
+while a duplicate rises into its place, both on `--ease-custom-1`.
+
+An `<i>` inside is italic, so a label can mix roman and italic —
+*Start your* COMMISSION. Variants are colour only: `plain` (ink) and
+`transparent` (light, plate at 20%). No shadow, no gradient, no icon.
 
 **InlineButton** — the redrawn underline above. Optional arrow translates 4px.
 

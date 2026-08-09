@@ -73,7 +73,8 @@
   --font-display-5:  var(--font-weight-regular) 1.125rem / 1.5 var(--font-family-primary);
 
   --font-body:       var(--font-weight-regular) 1.125rem / 1.5 var(--font-family-content);
-  --font-button:     var(--font-weight-regular) 0.9375rem / 1 var(--font-family-content);
+  /* Buttons are SERIF in this system, not sans. Easy to get wrong. */
+  --font-button:     var(--font-weight-regular) 0.9375rem / 1 var(--font-family-primary);
   --font-label-1:    var(--font-weight-regular) 1rem / 1.1 var(--font-family-primary);
   --font-label-2:    var(--font-weight-medium) 0.9375rem / 1.5 var(--font-family-content);
   --font-label-form: var(--font-weight-regular) 0.9375rem / 1 var(--font-family-content);

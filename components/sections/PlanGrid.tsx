@@ -68,7 +68,7 @@ export default function PlanGrid({
 
                 <Button
                   href={cta.href}
-                  variant={plan.featured ? 'solid' : 'outline'}
+                  variant={plan.featured ? 'transparent' : 'plain'}
                   className={styles.cta}
                 >
                   {cta.label}

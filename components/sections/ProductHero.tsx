@@ -93,7 +93,7 @@ export default function ProductHero({
                 </fieldset>
               ))}
 
-              <Button href={cta.href} size="lg" className={styles.cta}>
+              <Button href={cta.href} className={styles.cta}>
                 {cta.label}
               </Button>
 

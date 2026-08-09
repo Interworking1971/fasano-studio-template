@@ -43,7 +43,7 @@ export default function Gallery() {
         </div>
 
         <Reveal className={styles.action}>
-          <Button href={gallery.cta.href} variant="outline" size="lg">
+          <Button href={gallery.cta.href} variant="plain">
             {gallery.cta.label}
           </Button>
         </Reveal>

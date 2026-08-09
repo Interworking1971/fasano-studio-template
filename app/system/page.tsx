@@ -153,24 +153,26 @@ export default function SystemPage() {
       {/* ---------------- COMPONENTS ---------------- */}
       <Section id="components" number="04" title="Components">
         <div className={styles.specs}>
-          <Spec label="Button · solid">
-            <Button href="#components">Prenota la prova</Button>
+          <Spec label="Button · plain">
+            <Button href="#components">Begin a commission</Button>
           </Spec>
-          <Spec label="Button · outline">
-            <Button href="#components" variant="outline">
-              Orari karate
+          <Spec label="Button · mixed roman/italic">
+            <Button href="#components" variant="plain">
+              <i>Start your</i> COMMISSION
             </Button>
           </Spec>
-          <Spec label="Button · large">
-            <Button href="#components" size="lg">
-              Prenota la prova gratuita
+          <Spec label="Button · on dark" >
+            <Button href="#components" variant="transparent">
+              See the archive
             </Button>
           </Spec>
-          <Spec label="Button · loading">
-            <Button loading>Invio</Button>
+          <Spec label="Button · no entrance plate">
+            <Button href="#components" fill={false}>
+              Without the plate
+            </Button>
           </Spec>
           <Spec label="InlineButton">
-            <InlineButton href="#components">Scopri il metodo</InlineButton>
+            <InlineButton href="#components">See the process</InlineButton>
           </Spec>
           <Spec label="InlineButton · arrow">
             <InlineButton href="#components" arrow>
@@ -178,10 +180,10 @@ export default function SystemPage() {
             </InlineButton>
           </Spec>
           <Spec label="ScrollCue">
-            <ScrollCue label="Scorri" />
+            <ScrollCue label="Scroll" />
           </Spec>
           <Spec label="Eyebrow">
-            <p className="eyebrow">Discipline</p>
+            <p className="eyebrow">Archive</p>
           </Spec>
         </div>
 

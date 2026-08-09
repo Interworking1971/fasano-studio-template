@@ -12,7 +12,7 @@ export default function NotFound() {
           <h1 className={styles.title}>{content.title}</h1>
           <p className={styles.body}>{content.body}</p>
           <div className={styles.actions}>
-            <Button href={content.cta.href} size="lg">
+            <Button href={content.cta.href}>
               {content.cta.label}
             </Button>
             <InlineButton href={content.secondary.href} arrow>

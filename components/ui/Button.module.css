@@ -1,16 +1,23 @@
+/* ==========================================================================
+   BUTTON
+   Measured from the reference. Square, serif, no box at rest. The plate
+   behind it is an entrance, and the hover is a text roll.
+   ========================================================================== */
+
 .button {
   position: relative;
+  z-index: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  overflow: hidden;
-  isolation: isolate;
+  min-width: 45px;
+  min-height: 45px;
+  padding: 10px;
+  border-radius: 0;
   font: var(--font-button);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  border-radius: var(--radius-pill);
-  transition: border-color 0.4s var(--ease-custom-1);
+  letter-spacing: 0.06em;
+  text-transform: none;
+  transition: color 0.3s var(--ease-custom-1);
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -20,105 +27,91 @@
 }
 
 .button:disabled {
-  opacity: 0.45;
+  color: var(--color-text-secondary);
   pointer-events: none;
 }
 
-/* --------------------------------------------------------------------
-   SIZES
-   -------------------------------------------------------------------- */
-.md {
-  height: 48px;
-  padding-inline: 26px;
-}
-
-.lg {
-  height: 58px;
-  padding-inline: 34px;
-  font-size: 1rem;
+/* Mixed roman/italic labels — "<i>Start your</i> COMMISSION". */
+.button i {
+  font-style: italic;
 }
 
 /* --------------------------------------------------------------------
-   THE WIPE
-   A block that sits behind the label and grows up from the bottom edge.
-   scaleY + transform-origin keeps it on the compositor.
+   THE PLATE
+   Grows from the bottom edge when the button enters. `out-expo` over a
+   full second is what makes it read as unfurling rather than snapping.
    -------------------------------------------------------------------- */
-.fill {
+.button::after {
+  content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-grey-100);
   transform: scaleY(0);
-  transform-origin: bottom center;
-  transition: transform 0.5s var(--ease-custom-1);
+  transform-origin: bottom;
+  transition:
+    opacity 0.3s var(--ease-custom-1),
+    transform 1s var(--ease-out-expo);
 }
 
-.button:hover .fill,
-.button:focus-visible .fill {
+.button[data-fill='true']::after {
   transform: scaleY(1);
 }
 
-.label {
+/* --------------------------------------------------------------------
+   VARIANTS — colour only. Neither adds a border or a radius.
+   -------------------------------------------------------------------- */
+.plain {
+  color: var(--color-grey-900);
+}
+
+.transparent {
+  color: var(--color-grey-100);
+}
+
+.transparent::after {
+  opacity: 0.2;
+}
+
+/* --------------------------------------------------------------------
+   HOVER — a vertical text roll, not a fill.
+   The label lifts out of the mask by its own height plus 0.4em while a
+   duplicate rises from below into the same slot.
+   -------------------------------------------------------------------- */
+.roll {
   position: relative;
-  transition: color 0.4s var(--ease-custom-1);
+  display: inline-block;
+  overflow: hidden;
 }
 
-/* --------------------------------------------------------------------
-   VARIANTS
-   -------------------------------------------------------------------- */
-.solid {
-  background-color: var(--color-text-primary);
-  color: var(--color-background-primary);
+.content,
+.copy {
+  display: block;
+  transition: transform 0.55s var(--ease-custom-1);
 }
 
-.solid .fill {
-  background-color: var(--color-accent);
+.copy {
+  position: absolute;
+  inset: 0;
+  transform: translateY(calc(100% + 0.4em));
 }
 
-.outline {
-  border: 1px solid var(--color-text-primary);
-  color: var(--color-text-primary);
+@media (hover: hover) {
+  .button:hover .content {
+    transform: translateY(calc(-100% - 0.4em));
+  }
+
+  .button:hover .copy {
+    transform: translateY(0);
+  }
 }
 
-.outline .fill {
-  background-color: var(--color-text-primary);
-}
-
-.outline:hover .label,
-.outline:focus-visible .label {
-  color: var(--color-background-primary);
-}
-
-.ghost {
-  padding-inline: 0;
-  height: auto;
-  color: var(--color-text-primary);
-  border-radius: 0;
-}
-
-.ghost .fill {
-  display: none;
-}
-
-/* --------------------------------------------------------------------
-   LOADING — three dots, staggered, matching the reference's 1s cycle.
-   -------------------------------------------------------------------- */
-.loading {
-  display: inline-flex;
-  gap: 4px;
-}
-
-.loading i {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: currentcolor;
-  animation: button-loading 1s infinite;
-}
-
-.loading i:nth-child(2) { animation-delay: 0.15s; }
-.loading i:nth-child(3) { animation-delay: 0.3s; }
-
-@keyframes button-loading {
-  0%, 100% { opacity: 0.25; transform: translateY(0); }
-  50%      { opacity: 1;    transform: translateY(-3px); }
+@media (prefers-reduced-motion: reduce) {
+  .content,
+  .copy,
+  .button::after {
+    transition: none;
+  }
 }

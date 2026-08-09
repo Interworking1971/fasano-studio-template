@@ -24,7 +24,7 @@ export default function FinalCta() {
           </Reveal>
 
           <Reveal index={3} className={styles.actions}>
-            <Button href={finalCta.cta.href} size="lg">
+            <Button href={finalCta.cta.href}>
               {finalCta.cta.label}
             </Button>
             <a href={contact.phoneHref} className={styles.phone}>

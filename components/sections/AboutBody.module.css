@@ -1,0 +1,98 @@
+.about {
+  background-color: var(--color-background-primary);
+}
+
+.grid {
+  display: grid;
+  gap: 48px;
+}
+
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 60ch;
+}
+
+.paragraph {
+  font: var(--font-body);
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+/* First paragraph carries the weight. */
+.paragraph:first-child {
+  font: var(--font-display-5);
+  font-size: 1.375rem;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+}
+
+/* --------------------------------------------------------------------
+   FIGURES RAIL
+   -------------------------------------------------------------------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px var(--gap);
+  align-content: start;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-line);
+}
+
+.figure {
+  font-family: var(--font-family-primary);
+  font-size: 3rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-secondary);
+}
+
+/* --------------------------------------------------------------------
+   PLATES
+   -------------------------------------------------------------------- */
+.plates {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--grid-gap);
+  margin-top: 72px;
+}
+
+.plate:first-child {
+  grid-column: span 2;
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 1.4fr 1fr;
+    column-gap: calc(var(--gap) * 2.5);
+    align-items: start;
+  }
+
+  .plates {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
+    margin-top: 120px;
+    align-items: start;
+  }
+
+  .plate:first-child {
+    grid-column: auto;
+  }
+
+  .plate:nth-child(2) {
+    margin-top: 72px;
+  }
+}

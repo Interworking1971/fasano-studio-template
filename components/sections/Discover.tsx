@@ -1,11 +1,11 @@
-import { site } from '@/content/site'
+import { home } from '@/content/home'
 import InlineButton from '@/components/ui/InlineButton'
 import { Reveal, RevealLines } from '@/components/motion/Reveal'
 import styles from './Discover.module.css'
 
 /** Statement block — eyebrow, two-line display claim, body, inline link. */
 export default function Discover() {
-  const { discover } = site
+  const { discover } = home
 
   return (
     <section className={`${styles.discover} section`} id="studio">

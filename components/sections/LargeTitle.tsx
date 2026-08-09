@@ -1,4 +1,4 @@
-import { site } from '@/content/site'
+import { home } from '@/content/home'
 import Media from '@/components/ui/Media'
 import Parallax from '@/components/motion/Parallax'
 import { RevealLines } from '@/components/motion/Reveal'
@@ -6,7 +6,7 @@ import styles from './LargeTitle.module.css'
 
 /** Oversized two-line statement over a wide parallax plate. */
 export default function LargeTitle() {
-  const { largeTitle } = site
+  const { largeTitle } = home
 
   return (
     <section className={styles.largeTitle}>

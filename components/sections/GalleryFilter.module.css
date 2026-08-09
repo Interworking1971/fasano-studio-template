@@ -1,0 +1,138 @@
+.archive {
+  background-color: var(--color-background-primary);
+  padding-top: 0;
+}
+
+/* --------------------------------------------------------------------
+   FILTER BAR
+   -------------------------------------------------------------------- */
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 24px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.filter {
+  position: relative;
+  padding-bottom: 4px;
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-text-secondary);
+  transition: color 0.35s var(--ease-out-quart);
+}
+
+.filter::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: currentcolor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease-out-quart);
+}
+
+.filter:hover,
+.filter[data-active='true'] {
+  color: var(--color-text-primary);
+}
+
+.filter[data-active='true']::after {
+  transform: scaleX(1);
+}
+
+.filter:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.count {
+  font: var(--font-tiny-2);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------
+   GRID
+   Hidden cells collapse out of layout; visible ones re-cascade on every
+   filter change via --index.
+   -------------------------------------------------------------------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px var(--grid-gap);
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.5s var(--ease-out-sine) calc(var(--index) * 45ms),
+    transform 0.6s var(--ease-out-quart) calc(var(--index) * 45ms);
+}
+
+.cell[data-shown='false'] {
+  display: none;
+}
+
+@starting-style {
+  .cell[data-shown='true'] {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font: var(--font-tiny-1);
+}
+
+.name {
+  color: var(--color-text-primary);
+}
+
+.year {
+  color: var(--color-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 56px var(--gap);
+  }
+}
+
+@media (min-width: 1280px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell {
+    transition: none;
+  }
+}

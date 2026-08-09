@@ -1,4 +1,4 @@
-import { site } from '@/content/site'
+import { home } from '@/content/home'
 import Media from '@/components/ui/Media'
 import Parallax from '@/components/motion/Parallax'
 import { Reveal, RevealLines } from '@/components/motion/Reveal'
@@ -6,7 +6,7 @@ import styles from './SecondaryHero.module.css'
 
 /** Studio introduction — tall portrait plate against an offset text column. */
 export default function SecondaryHero() {
-  const { secondaryHero } = site
+  const { secondaryHero } = home
 
   return (
     <section className={`${styles.secondary} section`}>

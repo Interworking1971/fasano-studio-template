@@ -1,11 +1,13 @@
 import { site } from '@/content/site'
+import { home } from '@/content/home'
 import Button from '@/components/ui/Button'
 import { Reveal, RevealLines } from '@/components/motion/Reveal'
 import styles from './FinalCta.module.css'
 
 /** Closing ask. */
 export default function FinalCta() {
-  const { finalCta, contact } = site
+  const { finalCta } = home
+  const { contact } = site
 
   return (
     <section className={`${styles.final} section`}>

@@ -1,10 +1,10 @@
-import { site } from '@/content/site'
+import { home } from '@/content/home'
 import { Reveal } from '@/components/motion/Reveal'
 import styles from './BulletPoints.module.css'
 
 /** What every membership includes — a numbered rule-separated list. */
 export default function BulletPoints() {
-  const { bulletPoints } = site
+  const { bulletPoints } = home
 
   return (
     <section className={`${styles.bullets} section`}>

@@ -1,33 +1,55 @@
-import { site } from '@/content/site'
 import Button from '@/components/ui/Button'
 import { Reveal } from '@/components/motion/Reveal'
-import styles from './Memberships.module.css'
+import styles from './PlanGrid.module.css'
 
-/** Pricing. Three plans, the middle one carried by weight rather than colour. */
-export default function Memberships() {
-  const { memberships } = site
+export type Plan = {
+  name: string
+  price: string
+  period: string
+  body: string
+  includes: readonly string[]
+  /** One plan may be featured — it inverts to the dark surface and lifts out of the row. */
+  featured?: boolean
+}
 
+/**
+ * Three-up pricing.
+ *
+ * The featured plan is distinguished by surface and elevation rather than a
+ * coloured "most popular" badge — the system has no badge, and adding one
+ * would be the first piece of visual noise on the page.
+ */
+export default function PlanGrid({
+  eyebrow,
+  title,
+  plans,
+  note,
+  cta,
+  id,
+}: {
+  eyebrow: string
+  title: string
+  plans: readonly Plan[]
+  note?: string
+  cta: { label: string; href: string }
+  id?: string
+}) {
   return (
-    <section className={`${styles.memberships} section`} id="abbonamenti">
+    <section className={`${styles.memberships} section`} id={id}>
       <div className="container">
         <div className={styles.head}>
           <Reveal as="p" className="eyebrow">
-            {memberships.eyebrow}
+            {eyebrow}
           </Reveal>
           <Reveal as="h2" index={1} className={styles.title}>
-            {memberships.title}
+            {title}
           </Reveal>
         </div>
 
         <div className={styles.grid}>
-          {memberships.plans.map((plan, i) => (
-            <Reveal
-              key={plan.name}
-              index={i}
-              className={styles.plan}
-              // data attribute drives the featured treatment in CSS
-            >
-              <article data-featured={plan.featured} className={styles.card}>
+          {plans.map((plan, i) => (
+            <Reveal key={plan.name} index={i} className={styles.plan}>
+              <article data-featured={!!plan.featured} className={styles.card}>
                 <header className={styles.cardHead}>
                   <h3 className={styles.name}>{plan.name}</h3>
                   <p className={styles.priceRow}>
@@ -45,18 +67,18 @@ export default function Memberships() {
                 </ul>
 
                 <Button
-                  href={site.nav.cta.href}
+                  href={cta.href}
                   variant={plan.featured ? 'solid' : 'outline'}
                   className={styles.cta}
                 >
-                  {site.nav.cta.label}
+                  {cta.label}
                 </Button>
               </article>
             </Reveal>
           ))}
         </div>
 
-        <p className={styles.note}>{memberships.note}</p>
+        {note && <p className={styles.note}>{note}</p>}
       </div>
     </section>
   )

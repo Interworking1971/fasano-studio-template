@@ -1,0 +1,94 @@
+.legal {
+  background-color: var(--color-background-primary);
+  padding-block: 64px var(--section-gap);
+}
+
+.grid {
+  display: grid;
+  gap: 48px;
+}
+
+/* --------------------------------------------------------------------
+   CONTENTS RAIL
+   -------------------------------------------------------------------- */
+.toc {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.tocTitle {
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-text-secondary);
+}
+
+.tocList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  counter-reset: toc;
+}
+
+.tocList a {
+  font: var(--font-tiny-1);
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  transition: color 0.3s var(--ease-out-quart);
+}
+
+.tocList a:hover {
+  color: var(--color-text-primary);
+}
+
+.updated {
+  font: var(--font-tiny-2);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-secondary);
+}
+
+/* --------------------------------------------------------------------
+   PROSE — readability first.
+   -------------------------------------------------------------------- */
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 68ch;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heading {
+  font: var(--font-display-4);
+  scroll-margin-top: calc(var(--header-height) + 32px);
+}
+
+.body {
+  font: var(--font-body);
+  line-height: 1.75;
+  color: var(--color-text-secondary);
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 240px 1fr;
+    gap: calc(var(--gap) * 2);
+    align-items: start;
+  }
+
+  .toc {
+    position: sticky;
+    top: calc(var(--header-height) + 32px);
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+}

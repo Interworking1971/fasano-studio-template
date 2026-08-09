@@ -1,0 +1,169 @@
+.product {
+  padding-top: calc(var(--header-height) + 40px);
+  padding-bottom: var(--section-gap);
+  background-color: var(--color-background-primary);
+}
+
+.grid {
+  display: grid;
+  gap: 40px;
+}
+
+/* --------------------------------------------------------------------
+   MEDIA COLUMN
+   -------------------------------------------------------------------- */
+.medias {
+  display: flex;
+  flex-direction: column;
+  gap: var(--grid-gap);
+  min-width: 0;
+}
+
+.plate {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------
+   BUY COLUMN — pinned beside the scrolling plates on desktop.
+   -------------------------------------------------------------------- */
+.panel {
+  min-width: 0;
+}
+
+.panelInner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.eyebrow {
+  margin-bottom: 2px;
+}
+
+.name {
+  font: var(--font-display-2);
+  letter-spacing: -0.02em;
+}
+
+.price {
+  font: var(--font-label-1);
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.lede {
+  font: var(--font-body);
+  color: var(--color-text-secondary);
+  max-width: 42ch;
+}
+
+/* --------------------------------------------------------------------
+   OPTIONS — native radios, styled entirely from :checked.
+   -------------------------------------------------------------------- */
+.option {
+  width: 100%;
+  border: none;
+  padding: 0;
+  margin-top: 8px;
+}
+
+.optionName {
+  padding: 0;
+  margin-bottom: 12px;
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-text-secondary);
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--color-line);
+}
+
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-block: 14px;
+  border-bottom: 1px solid var(--color-line);
+  cursor: pointer;
+  transition: padding-left 0.4s var(--ease-out-quart);
+}
+
+.choice:hover {
+  padding-left: 8px;
+}
+
+/* The input stays in the DOM and keeps focus; only its appearance is ours. */
+.choice input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border: 1px solid var(--color-text-secondary);
+  border-radius: 50%;
+  transition:
+    border-color 0.3s var(--ease-out-quart),
+    box-shadow 0.3s var(--ease-out-quart);
+}
+
+.choice input:checked {
+  border-color: var(--color-accent);
+  box-shadow: inset 0 0 0 3px var(--color-background-primary),
+    inset 0 0 0 14px var(--color-accent);
+}
+
+.choice input:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.choiceBody {
+  display: flex;
+  flex: 1;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.choiceLabel {
+  font: var(--font-label-2);
+  font-weight: var(--font-weight-regular);
+}
+
+.choiceNote {
+  font: var(--font-tiny-1);
+  color: var(--color-text-secondary);
+  text-align: right;
+}
+
+.cta {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.reassure {
+  font: var(--font-tiny-1);
+  color: var(--color-text-secondary);
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 1.25fr 1fr;
+    column-gap: calc(var(--gap) * 2);
+    align-items: start;
+  }
+
+  .panel {
+    position: sticky;
+    top: calc(var(--header-height) + 40px);
+  }
+
+  .cta {
+    width: auto;
+    min-width: 260px;
+  }
+}

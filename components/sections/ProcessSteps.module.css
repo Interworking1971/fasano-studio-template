@@ -1,0 +1,89 @@
+.process {
+  background-color: var(--color-background-primary);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+}
+
+.step {
+  display: grid;
+  gap: 24px;
+}
+
+.mediaCol {
+  width: 100%;
+}
+
+.textCol {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.index {
+  font-family: var(--font-family-primary);
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--color-text-primary);
+  opacity: 0.16;
+}
+
+.duration {
+  font: var(--font-tiny-1);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-accent);
+}
+
+.title {
+  font: var(--font-display-4);
+  font-size: 1.75rem;
+}
+
+.body {
+  font: var(--font-body);
+  color: var(--color-text-secondary);
+  max-width: 46ch;
+}
+
+@media (min-width: 900px) {
+  .list {
+    gap: 120px;
+    /* The continuous rule the steps hang off. */
+    background-image: linear-gradient(var(--color-line), var(--color-line));
+    background-size: 1px 100%;
+    background-position: 50% 0;
+    background-repeat: no-repeat;
+  }
+
+  .step {
+    grid-template-columns: 1fr 1fr;
+    column-gap: calc(var(--gap) * 2.5);
+    align-items: center;
+  }
+
+  /* Alternate which side the plate falls on. */
+  .step[data-side='right'] .mediaCol {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .step[data-side='right'] .textCol {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .step[data-side='right'] .body {
+    text-align: right;
+  }
+
+  .index {
+    font-size: 5rem;
+  }
+}

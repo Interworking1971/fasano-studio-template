@@ -35,7 +35,7 @@ export default function Header() {
           {/* Logo */}
           <a href="#top" className={styles.logo} style={{ '--i': 0 } as React.CSSProperties}>
             <span className={styles.logoMark}>{site.brand.name}</span>
-            <span className={styles.logoPlace}>Fasano</span>
+            {site.brand.locality && <span className={styles.logoPlace}>{site.brand.locality}</span>}
           </a>
 
           {/* Desktop nav */}

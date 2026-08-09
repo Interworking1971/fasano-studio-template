@@ -1,10 +1,10 @@
-import { site } from '@/content/site'
+import { home } from '@/content/home'
 import { Reveal } from '@/components/motion/Reveal'
 import styles from './Quote.module.css'
 
 /** Pull quote. One idea, set large, with nothing else on the screen. */
 export default function Quote() {
-  const { quote } = site
+  const { quote } = home
 
   return (
     <section className={`${styles.quote} section`}>

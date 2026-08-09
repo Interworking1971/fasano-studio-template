@@ -10,9 +10,6 @@ import {
   DiptychEdito,
   DiptychSingleMask,
 } from '@/components/sections/Diptychs'
-import Disciplines from '@/components/sections/Disciplines'
-import Timetable from '@/components/sections/Timetable'
-import Memberships from '@/components/sections/Memberships'
 import Gallery from '@/components/sections/Gallery'
 import Quote from '@/components/sections/Quote'
 import Reassurance from '@/components/sections/Reassurance'
@@ -21,9 +18,8 @@ import FinalCta from '@/components/sections/FinalCta'
 /**
  * The page is only an assembly order.
  *
- * Every section reads its own copy from content/site.ts, so re-ordering,
- * removing or duplicating a section is a one-line change here and nothing
- * else in the codebase has to know.
+ * Each section reads its copy from content/home.ts, so re-ordering,
+ * removing or duplicating one is a single-line change here.
  */
 export default function HomePage() {
   return (
@@ -37,9 +33,6 @@ export default function HomePage() {
       <DiptychSticky />
       <DiptychDoubleMask />
       <DiptychEdito />
-      <Disciplines />
-      <Timetable />
-      <Memberships />
       <DiptychSingleMask />
       <Gallery />
       <Quote />

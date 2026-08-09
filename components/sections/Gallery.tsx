@@ -1,4 +1,4 @@
-import { site } from '@/content/site'
+import { home } from '@/content/home'
 import Media from '@/components/ui/Media'
 import Button from '@/components/ui/Button'
 import Parallax from '@/components/motion/Parallax'
@@ -13,7 +13,7 @@ import styles from './Gallery.module.css'
  * its own stagger and carries a light parallax.
  */
 export default function Gallery() {
-  const { gallery } = site
+  const { gallery } = home
 
   return (
     <section className={`${styles.gallery} section`}>

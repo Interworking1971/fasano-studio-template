@@ -1,10 +1,10 @@
-import { site } from '@/content/site'
+import { home } from '@/content/home'
 import { Reveal } from '@/components/motion/Reveal'
 import styles from './Reassurance.module.css'
 
 /** Four short answers to the objections that stop people signing up. */
 export default function Reassurance() {
-  const { reassurance } = site
+  const { reassurance } = home
 
   return (
     <section className={styles.reassurance}>

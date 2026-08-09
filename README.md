@@ -1,16 +1,13 @@
-# FORMA — Editorial Studio Template
+# Editorial Studio — design system & site template
 
-A production-ready **design system + one-page site template** in the editorial
-luxury idiom: a high-contrast display serif against a neutral grotesque, warm
-limestone neutrals, full-bleed photography, and a motion layer built on named
-easings rather than defaults.
+A complete, production-ready **design system plus a 12-route site template** in
+the editorial-luxury idiom: a high-contrast display serif against a neutral
+grotesque, warm limestone neutrals, full-bleed photography, and a motion layer
+built on named easings rather than defaults.
 
-It ships instantiated for a demo client — **FORMA, a boutique gym in Fasano,
-Puglia** (karate, boxing, strength) — but the system underneath is
-brand-agnostic. Re-skinning is a two-file job.
-
-- **Live site:** enable GitHub Pages (see below) → `https://<user>.github.io/<repo>/`
-- **Living design system:** `/system` on the deployed site
+It ships **neutral** on purpose — the demo content is placeholder, so the repo
+stays a reusable starting point. For a worked example of it re-skinned for a
+real client, see [`examples/asd-corpus/`](examples/asd-corpus/).
 
 ---
 
@@ -21,12 +18,28 @@ brand-agnostic. Re-skinning is a two-file job.
 | **Framework** | Next.js 16 · React 19 · TypeScript |
 | **Styling** | CSS custom properties + CSS Modules (no utility framework) |
 | **Motion** | Lenis smooth scroll, IntersectionObserver reveals, scroll-linked CSS variables |
-| **Accessibility** | Radix accordion, focus-visible rings, full `prefers-reduced-motion` fallback |
-| **Output** | Static export (`out/`) — deployable to Pages, Netlify, Vercel, S3, anything |
+| **Accessibility** | Radix accordions, native radio groups, focus-visible rings, full `prefers-reduced-motion` fallback |
+| **Output** | Static export (`out/`) — Pages, Netlify, Vercel, S3, anything |
 | **Fonts** | Instrument Serif + Instrument Sans (open licence, self-hosted at build) |
 
-17 sections, 12 components, 19 named easings, zero runtime dependencies beyond
-React, Lenis and one Radix primitive.
+**12 routes · 24 components · 19 named easings · 1 dependency beyond React**
+(Lenis) plus one Radix primitive.
+
+### Routes
+
+| Route | What it demonstrates |
+|---|---|
+| `/` | Full editorial homepage — 14 sections |
+| `/product` | Sticky buy-panel, scrolling media stack, native option groups |
+| `/gallery` | Filterable archive grid with re-cascading stagger |
+| `/registry` | Pricing grid + ruled service index |
+| `/featured` | Portrait grid with greyscale-to-colour hover |
+| `/process` | Long-form numbered steps, alternating, on a centre rule |
+| `/about` | Prose column + figures rail + plate spread |
+| `/legal/faq` | Radix accordions |
+| `/legal/terms`, `/legal/privacy` | Long-form prose with sticky contents rail |
+| `/system` | **Living design-system documentation** |
+| 404 | Not-found state |
 
 ---
 
@@ -40,71 +53,60 @@ npm install
 npm run dev
 ```
 
-Then open <http://localhost:3700> — and <http://localhost:3700/system> for the
-style guide.
-
-To produce the static build:
+Open <http://localhost:3700> — and <http://localhost:3700/system> for the style
+guide.
 
 ```bash
 npm run build
 ```
 
-The result lands in `out/`.
+Static output lands in `out/`.
 
 ---
 
-## Re-skinning for a new client
+## Re-skinning
 
-Four steps, in order of how often you'll need them.
+Four steps, in the order you'll need them.
 
 ### 1. Colour and type → `app/styles/tokens.css`
 
-Every colour, font, spacing step and easing in the project is declared once in
-this file. Nothing else in the codebase hardcodes a colour or a typeface.
+Every colour, font, spacing step and easing is declared once here. Nothing else
+in the codebase hardcodes a colour or a typeface.
 
-The palette is two-layered: raw values (`--color-clay`) are aliased into
-semantic roles (`--color-accent`). Components only ever reference the semantic
-layer, which is what lets `[data-theme="dark"]` invert an entire section by
-re-pointing six variables.
+The palette is two-layered: raw values (`--color-clay`) alias into semantic
+roles (`--color-accent`). Components only reference the semantic layer, which is
+what lets `[data-theme="dark"]` invert a whole section by re-pointing six
+variables.
 
-To change the typefaces, swap the two `next/font/google` imports in
-`app/layout.tsx`. The rest of the system reads `--font-serif` / `--font-sans`.
+Swap the two `next/font/google` imports in `app/layout.tsx` to change typefaces.
+A machine-readable mirror lives at `design/tokens.json`.
 
-A machine-readable mirror lives at `design/tokens.json` for syncing into Figma
-or Style Dictionary.
+### 2. Words → `content/`
 
-### 2. Words → `content/site.ts`
+| File | Holds |
+|---|---|
+| `site.ts` | Brand, nav, contact, footer — shared by every page |
+| `home.ts` | The homepage |
+| `pages.ts` | Product, gallery, registry, people, process, about, legal, 404 |
 
-Every headline, paragraph, nav item, price, timetable row, link and image slot
-on the site. No component contains copy.
-
-Demo copy is in Italian with an `EN:` gloss comment on each display line, so a
-non-Italian reviewer can edit confidently.
-
-> **Placeholders marked `⚠︎ REPLACE`** — the address, phone number, VAT number,
-> prices, timetable and founder name are invented. Swap them before this goes
-> anywhere near a client's domain.
+No component contains copy.
 
 ### 3. Photography → `public/media/`
 
-Every image slot renders a **designed placeholder** until a real photograph is
-supplied: correct aspect ratio, system colours, film grain, and the slot's name
-printed on it. The box is reserved either way, so dropping in real images causes
-no layout shift and a half-finished shoot still looks deliberate.
-
-To fill a slot, drop the file into `public/media/` and set `src` on the matching
-entry in `content/site.ts`:
+Every image slot renders a **designed placeholder** until a real photograph
+exists: correct aspect ratio, system colours, film grain, and the slot's name
+printed on it. The box is reserved either way, so dropping in images causes no
+layout shift and a half-finished shoot still looks deliberate.
 
 ```ts
-hero: {
-  background: { src: '/media/sala-principale.jpg', alt: '…', ratio: '16 / 9' },
-}
+background: { src: '/media/studio-wide.jpg', alt: '…', ratio: '16 / 9' }
 ```
 
-### 4. Structure → `app/page.tsx`
+### 4. Structure → `app/*/page.tsx`
 
-The page is only an assembly order. Re-order, delete or duplicate sections —
-each is self-contained and reads its own content.
+Each page is just an assembly order. Re-order, remove or duplicate sections —
+they're self-contained, and the page-level ones take props rather than reaching
+into the content layer.
 
 ---
 
@@ -112,65 +114,59 @@ each is self-contained and reads its own content.
 
 ```
 app/
-  layout.tsx            root shell — fonts, loader, header, footer
-  page.tsx              section assembly order
-  system/               living design-system documentation
+  layout.tsx              root shell — fonts, loader, header, footer
+  page.tsx                homepage assembly
+  product|gallery|registry|featured|process|about/
+  legal/faq|terms|privacy/
+  system/                 living design-system documentation
+  not-found.tsx
   styles/
-    tokens.css          ← the design system
-    globals.css         grid, type utilities, shared keyframes, reveal contract
+    tokens.css            ← the design system
+    globals.css           grid, type utilities, keyframes, reveal contract
     reset.css
 components/
-  layout/               Loader · Header · Footer
-  motion/               SmoothScroll · Reveal / RevealLines · Parallax
-  sections/             the 17 page sections
-  ui/                   Button · InlineButton · Media · Field · ScrollCue
-content/site.ts         ← all copy and data
-design/tokens.json      machine-readable token mirror
-lib/hooks.ts            useInView · useScrollProgress · useScrollDirection · …
+  layout/                 Loader · Header · Footer
+  motion/                 SmoothScroll · Reveal / RevealLines · Parallax
+  sections/               24 page sections
+  ui/                     Button · InlineButton · Media · Field · ScrollCue
+content/                  ← all copy
+design/tokens.json        machine-readable token mirror
+examples/asd-corpus/      a worked client re-skin
+lib/hooks.ts              useInView · useScrollProgress · useScrollDirection · …
 ```
 
 ### How the motion layer works
 
-Two ideas carry almost all of it.
-
 **Reveals are declarative.** Sections don't animate themselves. They mark
-elements with `data-reveal` and an `--index`, a single `IntersectionObserver`
-flips the attribute, and one rule in `globals.css` owns the transition.
-Re-choreographing the entire site is a CSS edit.
+elements with `data-reveal` and an `--index`; one `IntersectionObserver` flips
+the attribute, and a single rule in `globals.css` owns the transition.
+Re-choreographing the whole site is a CSS edit.
 
 **Scroll effects are CSS-driven.** `useScrollProgress` writes a 0→1 value to a
-custom property on each frame a section is near the viewport. Parallax and mask
-effects read that variable from CSS, so the main thread never touches a
-transform and the work stays on the compositor.
+custom property each frame a section is near the viewport. Parallax and mask
+effects read it from CSS, so the main thread never touches a transform.
 
-The intro is a two-layer CSS mask with `exclude` compositing: a viewport-shaped
-window is punched through an opaque plate and grown in two beats. The page
-underneath is real the whole time — nothing is duplicated or faked. It runs once
-per session and is skipped entirely under reduced motion.
+**The intro** is a two-layer CSS mask with `exclude` compositing: a
+viewport-shaped window is punched through an opaque plate and grown in two
+beats. The page underneath is real throughout. Runs once per session, skipped
+entirely under reduced motion.
 
 ---
 
 ## Deploying to GitHub Pages
 
-The workflow at `.github/workflows/deploy.yml` is ready. Once the repo is on
-GitHub:
-
-1. **Settings → Pages → Source → GitHub Actions**
-2. Push to `main`
-
-The workflow builds with `NEXT_PUBLIC_BASE_PATH` set to the repo name (a project
-Pages site is served from `/<repo>/`), writes `.nojekyll` so `/_next/` survives,
-and publishes `out/`.
-
-For a custom domain or a root-level host, leave `NEXT_PUBLIC_BASE_PATH` unset.
+`.github/workflows/deploy.yml` is ready. Set **Settings → Pages → Source →
+GitHub Actions**, then push to `main`. The workflow builds with
+`NEXT_PUBLIC_BASE_PATH` set to the repo name, writes `.nojekyll`, and publishes
+`out/`. Leave the variable unset for a root-level host.
 
 ---
 
 ## Credits & licence
 
-Template code is MIT (see `LICENSE`).
+MIT (see `LICENSE`).
 
 The visual language is an original build in a widely-used editorial idiom. No
 markup, stylesheet, copy, imagery or font file was copied from any existing
-site; the two typefaces are open-licence Google Fonts. Replace the placeholder
-business details before publishing.
+site; both typefaces are open-licence Google Fonts. Legal page copy is
+structural placeholder only — have a solicitor draft the real thing.

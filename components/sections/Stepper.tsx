@@ -1,4 +1,4 @@
-import { site } from '@/content/site'
+import { home } from '@/content/home'
 import Media from '@/components/ui/Media'
 import { Reveal } from '@/components/motion/Reveal'
 import styles from './Stepper.module.css'
@@ -11,7 +11,7 @@ import styles from './Stepper.module.css'
  * mobile it collapses to a straightforward stack.
  */
 export default function Stepper() {
-  const { stepper } = site
+  const { stepper } = home
 
   return (
     <section className={`${styles.stepper} section`} id="metodo">

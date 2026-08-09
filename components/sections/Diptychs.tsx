@@ -1,4 +1,4 @@
-import { site } from '@/content/site'
+import { home } from '@/content/home'
 import Media from '@/components/ui/Media'
 import Button from '@/components/ui/Button'
 import InlineButton from '@/components/ui/InlineButton'
@@ -18,7 +18,7 @@ import styles from './Diptychs.module.css'
  * The image pins while the copy scrolls past it.
  */
 export function DiptychSticky() {
-  const d = site.diptychs.sticky
+  const d = home.diptychs.sticky
 
   return (
     <section className={`${styles.diptych} section`} id="discipline">
@@ -67,7 +67,7 @@ export function DiptychSticky() {
  * revealed behind its own clip so they uncover in sequence.
  */
 export function DiptychDoubleMask() {
-  const d = site.diptychs.doubleMask
+  const d = home.diptychs.doubleMask
 
   return (
     <section className={`${styles.diptych} ${styles.tinted} section`}>
@@ -109,7 +109,7 @@ export function DiptychDoubleMask() {
  * two heavy media sections.
  */
 export function DiptychEdito() {
-  const d = site.diptychs.mainEdito
+  const d = home.diptychs.mainEdito
 
   return (
     <section className={`${styles.edito} section`}>
@@ -145,7 +145,7 @@ export function DiptychEdito() {
  * Reversed diptych: wide landscape plate on the left, short copy right.
  */
 export function DiptychSingleMask() {
-  const d = site.diptychs.singleMask
+  const d = home.diptychs.singleMask
 
   return (
     <section className={`${styles.diptych} section`} id="prova">

@@ -1,4 +1,5 @@
 import { site } from '@/content/site'
+import { home } from '@/content/home'
 import Media from '@/components/ui/Media'
 import Button from '@/components/ui/Button'
 import ScrollCue from '@/components/ui/ScrollCue'
@@ -14,7 +15,8 @@ import styles from './MainHero.module.css'
  * wordmark is scaled up as a watermark against the bottom edge.
  */
 export default function MainHero() {
-  const { hero, brand } = site
+  const { hero } = home
+  const { brand } = site
 
   return (
     <section className={styles.hero} id="top">

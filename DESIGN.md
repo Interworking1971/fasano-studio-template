@@ -13,7 +13,8 @@ regardless of how good it looks.
 ## 0. The one-paragraph brief
 
 A cold, quiet, editorial system. Near-monochrome warm neutrals. A high-contrast
-display serif carrying every idea, a neutral grotesque carrying every fact.
+display serif for the big statements, a neutral grotesque for section headings,
+and serif again for body copy — see §3, the roles are counter-intuitive.
 Enormous negative space. Hard square corners, hairline rules, no shadows, no
 cards. Motion is slow, masked and scroll-linked. It should read like a printed
 art catalogue that happens to scroll — not like a SaaS landing page.
@@ -30,12 +31,13 @@ layout. This list matters more than everything below it.
 | Rounded corners on containers, images, cards, buttons | **`border-radius: 0`** everywhere. Nothing in this system is round |
 | Box shadows, elevation, glows | Separation comes from **hairline 1px rules** and background tint changes |
 | Cards — bordered boxes holding a title + text + button | **Ruled rows.** Items separated by 1px lines, no enclosure |
-| Everything centred | Predominantly **left-aligned**. Centre only: pull quote, dark edito band, final CTA |
+| Left-aligning everything | Much of this system is **centred** — eyebrows, giant statements, edito headings and body, pull quote, final CTA. Left-align is for ruled lists and diptych copy columns |
 | Gradient buttons, coloured fills, vivid accents | Accent is used at **hairline scale only** — a 3px bar, a rule, one word |
 | **Pill buttons, uppercase sans buttons** | Buttons are **square, serif, sentence case**, with no border and no background at rest — see §7 |
 | Emoji, icon badges, "✨ Feature" chips | Nothing. Numbers (`01`, `02`) if you need enumeration |
 | Uniform grids of equal tiles | **Uneven spans and vertical offsets.** No two adjacent cells the same height |
-| Big bold sans headlines | **Serif** for all display type. Sans never exceeds 1.875rem |
+| Big bold sans headlines | Sans headings are **30px, weight 500, tight negative tracking** — never large or bold |
+| All-serif or all-sans blocks | **Mix roman and italic inside a line.** Italic connectives, roman caps nouns |
 | Tight vertical rhythm | `--section-gap` is **100 / 160 / 200px**. Sections breathe enormously |
 | Hero with centred headline + two buttons | See §5 — the hero is a fixed, centred, *small* line over a masked video |
 | Stock-photo smiling faces, lifestyle imagery | Cold documentary photography, or the designed placeholder |
@@ -75,7 +77,18 @@ variables and inverts an entire section.
 
 ## 3. Type
 
-Two families. **Serif = meaning. Sans = information.** Never mix the roles.
+Two families, and the roles are **not** the obvious ones. Verified against
+the live site, not assumed:
+
+- **Section headings are SANS** — `--font-display-4`, weight 500, 30px,
+  `letter-spacing: -0.02em`, centred. Not serif, not bold, not huge.
+- **Body copy in editorial sections is SERIF** — 16px, weight 400,
+  `letter-spacing: 0.04em`, line-height **1.1** (tight), centred.
+- **Serif carries the big statements** — hero, `display-1/2/3`, pull quote.
+
+So the split is by *scale and role*, not by "serif for headings". A 30px sans
+heading sits above 16px centred serif body. Getting this backwards is the
+single fastest way to make the page look like a different site.
 
 | Token | Mobile | ≥930px | Family | Used for |
 |---|---|---|---|---|
@@ -83,9 +96,10 @@ Two families. **Serif = meaning. Sans = information.** Never mix the roles.
 | `--font-display-1` | 2.875rem/1.1 | **7.5rem**/1 | serif | Section-opening statement |
 | `--font-display-2` | 2.1875rem/1 | 2.5rem/1 | serif | Standard section heading |
 | `--font-display-3` | 1.5625rem/1.3 | **5rem**/1 | serif | Large heading, pull quote |
-| `--font-display-4` | 1.25rem/1.15 | 1.875rem/1.06 | **sans 500** | Sub-heading, list titles |
+| `--font-display-4` | 1.25rem/1.15 | 1.875rem/1.06 | **sans 500** | **Primary section heading**, centred, tracking −0.02em |
 | `--font-display-5` | 1.125rem/1.5 | 1.3125rem/1 | serif | Logo, captions, hero title |
-| `--font-body` | 1.125rem/1.5 | — | sans | Paragraphs |
+| `--font-body` | 1.125rem/1.5 | — | sans | UI paragraphs, forms |
+| *editorial body* | 1rem/1.1, tracking 0.04em | — | **serif**, centred | Body copy inside editorial sections |
 | `--font-label-2` | 0.9375rem/1.5 | 1.125rem/1.5 | sans 500 | Links, labels |
 | `--font-tiny-1` | 0.8125rem/1.6 | — | sans | Meta, captions |
 | `--font-tiny-2` | 0.625rem/1.4 | — | sans | Legal, credits |
@@ -96,8 +110,15 @@ Each token is a complete `font` shorthand — a component sets one property.
 line in italic serif**. Never bold, never colour, never underline. That italic
 is the only emphasis the system has.
 
-**Eyebrow:** `--font-tiny-1`, uppercase, `letter-spacing: 0.14em`, secondary
-colour. Sits above display type. Weight 400, never bold.
+**Eyebrow:** **serif**, small, centred, mixing italic connectives with roman
+caps — *the* ESSENCE *of* VERO. Not uppercase sans with wide tracking. The
+italic words are the joining words ("the", "of", "where", "meets"); the nouns
+stay roman caps.
+
+**Mixed roman/italic within a line** is the system's core typographic device
+and it appears everywhere — eyebrows, display lines, buttons. A giant centred
+statement reads *where* INNOVATION / *meets* CRAFTSMANSHIP: italic lowercase
+for the connectives, roman caps for the subject.
 
 Only two weights exist: **400 and 500.** There is no bold.
 
@@ -155,8 +176,12 @@ paragraph, inline link. Left column only, ~14ch measure on the heading.
 **3 · Three-step narrative** — three columns, **staircased**: column 2 offset
 down 64px, column 3 offset down 128px. Never a flat row.
 
-**4 · Full-bleed band** — 78lvh, dark scrim over parallax media, centred
-`--font-display-1`, two lines, second italic.
+**4 · Giant statement with overlapping plate** — on the **cream** background,
+not a dark band. A serif eyebrow, then a two-line statement at ~110px mixing
+italic lowercase connectives with roman caps. A centred media plate sits **in
+front of** the type, occluding the second line. The whole thing lives inside a
+pinned scroll section roughly 4 viewports tall that scrubs through its
+content.
 
 **5 · Ruled list** — 6 items, 3 columns, separated by 1px rules with interior
 verticals only. No card, no border around the group.

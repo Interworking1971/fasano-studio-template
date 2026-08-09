@@ -5,8 +5,7 @@
    No component hardcodes copy. Change this file + app/styles/tokens.css and
    you have a different client's site.
 
-   Copy is written in Italian for the demo client (a boutique gym in Fasano,
-   Puglia). Each display line carries an `EN:` gloss so a non-Italian reviewer
+   Copy is written in Italian for ASD Corpus Wellness, Fasano (BR), Puglia. Each display line carries an `EN:` gloss so a non-Italian reviewer
    can edit confidently — delete the comments once the copy is signed off.
 
    PLACEHOLDER DATA is marked with  ⚠︎ REPLACE  — address, phone, VAT,
@@ -36,12 +35,12 @@ export const site = {
   /* BRAND                                                              */
   /* ------------------------------------------------------------------ */
   brand: {
-    name: 'FORMA',
-    fullName: 'FORMA — Studio Fasano',
+    name: 'CORPUS',
+    fullName: 'ASD Corpus Wellness — Fasano',
     /** Sits in the <title> after every page name. */
-    titleSuffix: 'FORMA — Studio Fasano',
+    titleSuffix: 'ASD Corpus Wellness',
     description:
-      'Palestra boutique a Fasano. Karate, pugilato, forza e condizionamento in un unico studio, con programmi seguiti uno a uno.',
+      'ASD Corpus Wellness, Fasano. Karate, ju-jitsu, gym boxe, difesa personale, funzionale, posturale, pilates e floor barre — otto discipline, una sala, maestri che ti seguono per nome.',
     locale: 'it-IT',
     lang: 'it',
   },
@@ -52,8 +51,8 @@ export const site = {
   contact: {
     phone: '+39 080 442 1907',
     phoneHref: 'tel:+390804421907',
-    email: 'ciao@formafasano.it',
-    emailHref: 'mailto:ciao@formafasano.it',
+    email: 'info@asdcorpusfasano.it',
+    emailHref: 'mailto:info@asdcorpusfasano.it',
     address: {
       street: 'Via Nazionale dei Trulli 42',
       city: '72015 Fasano (BR)',
@@ -85,9 +84,9 @@ export const site = {
   /* 01 — LOADER                                                        */
   /* ------------------------------------------------------------------ */
   loader: {
-    // EN: "Fasano — since 1998"
-    kicker: 'Fasano — dal 1998',
-    word: 'FORMA',
+    // EN: "Fasano — Puglia"
+    kicker: 'Fasano — Puglia',
+    word: 'CORPUS',
   },
 
   /* ------------------------------------------------------------------ */
@@ -98,24 +97,24 @@ export const site = {
     line1: 'dove il corpo',
     line2Em: 'diventa',
     line3: 'disciplina',
-    // EN: "A boutique studio in Fasano. Karate, boxing, strength — one room, one method."
+    // EN: "Eight disciplines, one room, in the heart of Fasano."
     standfirst:
-      'Uno studio boutique nel cuore di Fasano. Karate, pugilato, forza. Una sala sola, un metodo solo.',
+      'Otto discipline nel cuore di Fasano. Dal karate al ju-jitsu, dal funzionale al pilates. Una sala sola, maestri che ti seguono per nome.',
     cta: { label: 'Prenota la prova', href: '#prova' },
     scrollCue: 'Scorri',
-    background: media('Sala principale · 16:9', '16 / 9', 'La sala principale dello studio FORMA'),
+    background: media('Sala principale · 16:9', '16 / 9', 'La sala principale di ASD Corpus'),
   },
 
   /* ------------------------------------------------------------------ */
   /* 03 — DISCOVER (animated statement)                                 */
   /* ------------------------------------------------------------------ */
   discover: {
-    // EN: "the essence of forma"
-    eyebrow: 'L’essenza di FORMA',
+    // EN: "the essence of corpus"
+    eyebrow: 'L’essenza di Corpus',
     // EN: "your body deserves a method, not a machine park"
     title: 'il tuo corpo merita un metodo',
     titleEm: 'non una sala attrezzi',
-    body: 'FORMA è una palestra boutique: pochi iscritti, sale piccole, allenatori che ti chiamano per nome. Ogni percorso parte da una valutazione fisica e finisce con un programma scritto su di te — che tu venga per il karate, per il pugilato o semplicemente per tornare in forma.',
+    body: 'ASD Corpus è una palestra di quartiere con l’anima di un dojo: pochi iscritti, sale a numero chiuso, maestri che ti chiamano per nome. Ogni percorso parte da una valutazione e finisce con un programma tuo — che tu venga per il karate, per il ju-jitsu o semplicemente per tornare in forma.',
     cta: { label: 'Scopri il metodo', href: '#metodo' },
   },
 
@@ -130,19 +129,19 @@ export const site = {
         index: '01',
         title: 'La valutazione',
         body: 'Quaranta minuti con un allenatore: mobilità, postura, forza di base, obiettivi. Nessun abbonamento prima di questo.',
-        media: media('Valutazione · 3:4', '3 / 4', 'Valutazione fisica iniziale'),
+        media: media('Prova · accoglienza · 3:4', '3 / 4', 'Prima lezione di prova'),
       },
       {
         index: '02',
         title: 'La disciplina',
-        body: 'Scegli la strada — karate, pugilato, forza — o combinale. Il programma resta uno, coerente, aggiornato ogni sei settimane.',
-        media: media('Disciplina · 3:4', '3 / 4', 'Allenamento di disciplina'),
+        body: 'Scegli la strada — karate, ju-jitsu, gym boxe, funzionale — o combinale. Il programma resta uno, coerente, aggiornato ogni sei settimane.',
+        media: media('Ju-Jitsu · tatami · 3:4', '3 / 4', 'Allenamento di ju-jitsu'),
       },
       {
         index: '03',
         title: 'La forma',
         body: 'Non un traguardo ma una condizione: un corpo che regge, si muove bene e non si fa male. Misurata, non promessa.',
-        media: media('Forma · 3:4', '3 / 4', 'Risultato del percorso'),
+        media: media('Posturale · 3:4', '3 / 4', 'Lavoro posturale in sala piccola'),
       },
     ],
   },
@@ -154,7 +153,7 @@ export const site = {
     // EN: "trained once. Never meant to stop."
     line1: 'Allenati una volta.',
     line2Em: 'Poi non smetti più.',
-    media: media('Sala pesi · 21:9', '21 / 9', 'La sala pesi vista dall’ingresso'),
+    media: media('Sala grande · panoramica · 21:9', '21 / 9', 'La sala grande in allenamento'),
   },
 
   /* ------------------------------------------------------------------ */
@@ -181,8 +180,8 @@ export const site = {
     // EN: "four hundred square metres, twelve people at a time"
     title: 'Quattrocento metri quadri,',
     titleEm: 'dodici persone alla volta',
-    body: 'Una sala tatami per il karate, un ring regolamentare per il pugilato, una sala forza con pedane e rack. Tre ambienti separati perché tre discipline non si allenano nello stesso rumore.',
-    media: media('Interno studio · 4:5', '4 / 5', 'Interno dello studio FORMA'),
+    body: 'Un tatami per karate, ju-jitsu e difesa personale. Una sala grande per gym boxe e funzionale. Una sala piccola per pilates, posturale e floor barre. Tre ambienti separati perché otto discipline non si allenano nello stesso rumore.',
+    media: media('Tatami · verticale · 4:5', '4 / 5', 'La sala tatami'),
   },
 
   /* ------------------------------------------------------------------ */
@@ -192,48 +191,56 @@ export const site = {
     sticky: {
       eyebrow: 'Karate',
       title: 'La strada lunga',
-      body: 'Karate Shotokan per adulti e bambini, dal principiante alla cintura nera. Due maestri, esami federali, kata e kumite. La disciplina che insegna tutte le altre.',
-      points: ['Bambini 5—11 anni', 'Ragazzi 12—17', 'Adulti tutti i livelli', 'Esami federali due volte l’anno'],
+      body: 'Karate per adulti e bambini, dal principiante alla cintura nera. Con Pino e Giacomo: kata, kumite ed esami federali. La disciplina che insegna tutte le altre.',
+      points: ['Bambini', 'Ragazzi', 'Adulti tutti i livelli', 'Esami federali'],
       cta: { label: 'Orari karate', href: '#orari' },
-      media: media('Karate · 3:4', '3 / 4', 'Lezione di karate sul tatami'),
+      media: media('Karate · tatami · 3:4', '3 / 4', 'Lezione di karate sul tatami'),
     },
     doubleMask: {
-      eyebrow: 'Pugilato',
-      title: 'Il lavoro pulito',
-      body: 'Pugilato tecnico, non fitness boxing. Si impara a stare in guardia, a muovere i piedi e a colpire bene prima di colpire forte. Sparring solo su base volontaria.',
-      mediaA: media('Boxe · guantoni · 1:1', '1 / 1', 'Guantoni appesi al ring'),
-      mediaB: media('Boxe · ring · 4:5', '4 / 5', 'Il ring dello studio'),
+      eyebrow: 'Ju-Jitsu e difesa personale',
+      title: 'Il lavoro a terra',
+      body: 'Ju-Jitsu con Angelo Vinci e Oronzo Pinto, due veterani della disciplina: proiezioni, leve, controllo. Accanto, un corso di difesa personale aperto a tutti — situazioni reali, risposte semplici, nessuna base richiesta.',
+      mediaA: media('Ju-Jitsu · presa · 1:1', '1 / 1', 'Dettaglio di una presa a terra'),
+      mediaB: media('Difesa personale · 4:5', '4 / 5', 'Esercitazione di difesa personale'),
     },
     mainEdito: {
       eyebrow: 'Il metodo',
-      // EN: "Strength is the base. Everything else is built on top."
-      title: 'La forza è la base.',
+      // EN: "The base is the body. Everything else is built on top."
+      title: 'La base è il corpo.',
       titleEm: 'Il resto ci si appoggia sopra.',
-      body: 'Chi fa karate e chi fa pugilato si allena comunque con i pesi: è quello che tiene insieme le articolazioni e allunga la carriera sportiva. Il programma di forza è lo stesso impianto per tutti — cambia il dosaggio, non la logica.',
-      cta: { label: 'Parla con un allenatore', href: '#prova' },
+      body: 'Chi fa karate e chi fa ju-jitsu si allena comunque nel funzionale e nel posturale: è quello che tiene insieme le articolazioni e allunga la carriera sportiva. L’impianto è lo stesso per tutti — cambia il dosaggio, non la logica.',
+      cta: { label: 'Parla con un maestro', href: '#prova' },
     },
     singleMask: {
-      eyebrow: 'Personal training',
-      title: 'Uno a uno',
-      body: 'Se preferisci allenarti da solo, o hai un infortunio da gestire, o vuoi semplicemente andare più veloce. Sessioni da cinquanta minuti, su appuntamento, dalle 06:30.',
+      eyebrow: 'Pilates, posturale e floor barre',
+      title: 'Il lavoro silenzioso',
+      body: 'Tre corsi nella sala piccola, a numero chiuso. Pilates con Angela, posturale con Alfredo, floor barre con Francesca Petrarca — tecnica posturale costruita sull’essenzialità del movimento, in gruppo o personal.',
       cta: { label: 'Richiedi disponibilità', href: '#prova' },
-      media: media('Personal training · 16:10', '16 / 10', 'Sessione di personal training'),
+      media: media('Sala piccola · 16:10', '16 / 10', 'Lezione nella sala piccola'),
     },
   },
 
   /* ------------------------------------------------------------------ */
   /* 09 — DISCIPLINES GRID                                              */
   /* ------------------------------------------------------------------ */
+  /*
+    The eight disciplines ASD Corpus actually runs, with the instructor
+    credited on each — taken from the club's own discipline cards.
+    Instructors are listed by the first names the club publishes; confirm
+    full names and spellings before launch.
+  */
   disciplines: {
     eyebrow: 'Discipline',
-    title: 'Sei strade, una sala',
+    title: 'Otto strade, una sala',
     items: [
-      { name: 'Karate Shotokan', meta: 'Tatami · tutti i livelli', body: 'Kata, kumite ed esami federali con due maestri cintura nera.' },
-      { name: 'Pugilato', meta: 'Ring · principianti e agonisti', body: 'Tecnica, footwork e preparazione. Sparring facoltativo.' },
-      { name: 'Forza e condizionamento', meta: 'Sala pesi · a numero chiuso', body: 'Pedane, rack e programmi progressivi scritti a mano.' },
-      { name: 'Mobilità e postura', meta: 'Sala piccola · 45 min', body: 'Per chi sta seduto tutto il giorno o torna da un infortunio.' },
-      { name: 'Karate Kids', meta: 'Tatami · 5—11 anni', body: 'Coordinazione, rispetto e disciplina prima della tecnica.' },
-      { name: 'Personal training', meta: 'Su appuntamento · 50 min', body: 'Uno a uno, dalle 06:30, in qualsiasi disciplina.' },
+      { name: 'Karate', meta: 'Tatami · con Pino e Giacomo', body: 'Kata, kumite e disciplina. Dalla prima cintura fino agli esami federali.' },
+      { name: 'Ju-Jitsu', meta: 'Tatami · con Angelo e Oronzo', body: 'Proiezioni, leve e lavoro a terra con due veterani della disciplina.' },
+      { name: 'Gym boxe', meta: 'Sala grande · con Ciccio', body: 'Guantoni, sacco e condizionamento. Tecnica vera, ritmo da allenamento.' },
+      { name: 'Difesa personale', meta: 'Tatami · con Oronzo', body: 'Situazioni reali, risposte semplici. Aperto a tutti, nessuna base richiesta.' },
+      { name: 'Funzionale', meta: 'Sala grande · con Ciccio', body: 'Circuiti a corpo libero e sovraccarico. La base che regge tutte le altre.' },
+      { name: 'Posturale', meta: 'Sala piccola · con Alfredo', body: 'Per chi sta seduto tutto il giorno o torna da un infortunio.' },
+      { name: 'Pilates', meta: 'Sala piccola · con Angela', body: 'Controllo, respiro e centro. Lezioni a numero chiuso.' },
+      { name: 'Floor barre', meta: 'Sala piccola · con Francesca Petrarca', body: 'Tecnica posturale sull’essenzialità del movimento. Gruppo e personal, total body.' },
     ],
   },
 
@@ -248,11 +255,11 @@ export const site = {
       {
         day: 'Lunedì',
         slots: [
-          { time: '07:00', name: 'Forza — turno mattina', room: 'Sala pesi' },
-          { time: '13:00', name: 'Mobilità e postura', room: 'Sala piccola' },
-          { time: '18:00', name: 'Karate Kids', room: 'Tatami' },
+          // Confirmed from the club's own Floor barre card.
+          { time: '11:30', name: 'Floor barre — Francesca Petrarca', room: 'Sala piccola' },
+          { time: '18:00', name: 'Karate bambini', room: 'Tatami' },
           { time: '19:15', name: 'Karate adulti', room: 'Tatami' },
-          { time: '20:30', name: 'Pugilato — tecnica', room: 'Ring' },
+          { time: '20:30', name: 'Gym boxe', room: 'Sala grande' },
         ],
       },
       {
@@ -318,7 +325,7 @@ export const site = {
         name: 'Una disciplina',
         price: '€ 55',
         period: 'al mese',
-        body: 'Karate, pugilato o forza. Accesso a tutti i turni della disciplina scelta.',
+        body: 'Karate, ju-jitsu, gym boxe, funzionale, pilates, posturale, floor barre o difesa personale. Accesso a tutti i turni della disciplina scelta.',
         includes: ['Valutazione iniziale', 'Programma scritto', 'Armadietto condiviso'],
         featured: false,
       },
@@ -351,28 +358,34 @@ export const site = {
   /* ------------------------------------------------------------------ */
   gallery: {
     eyebrow: 'Lo studio',
-    title: 'Dentro FORMA',
+    title: 'Dentro Corpus',
     cta: { label: 'Vieni a vederlo', href: '#prova' },
     items: [
-      media('Tatami · 3:4', '3 / 4', 'La sala tatami'),
-      media('Ring · 1:1', '1 / 1', 'Il ring da pugilato'),
-      media('Rack · 4:5', '4 / 5', 'Rack e pedane della sala forza'),
-      media('Dettaglio · 1:1', '1 / 1', 'Dettaglio delle attrezzature'),
-      media('Ingresso · 3:4', '3 / 4', 'L’ingresso dello studio'),
-      media('Spogliatoi · 4:5', '4 / 5', 'Gli spogliatoi'),
-      media('Corte esterna · 16:10', '16 / 10', 'La corte esterna'),
-      media('Fasano · 3:4', '3 / 4', 'Il centro di Fasano'),
+      media('Gym boxe · sacco · 3:4', '3 / 4', 'Allenamento al sacco'),
+      media('Cintura · dettaglio · 1:1', '1 / 1', 'Dettaglio di una cintura annodata'),
+      media('Funzionale · 4:5', '4 / 5', 'Circuito funzionale in sala grande'),
+      media('Guantoni · dettaglio · 1:1', '1 / 1', 'Guantoni appoggiati a bordo sala'),
+      media('Pilates · 3:4', '3 / 4', 'Lezione di pilates'),
+      media('Gruppo · tatami · 4:5', '4 / 5', 'Il gruppo schierato sul tatami'),
+      media('Sala grande · 16:10', '16 / 10', 'La sala grande vista dall’ingresso'),
+      media('Ingresso · 3:4', '3 / 4', 'L’ingresso della palestra'),
     ],
   },
 
   /* ------------------------------------------------------------------ */
   /* 13 — LARGE QUOTE                                                   */
   /* ------------------------------------------------------------------ */
+  /*
+    ⚠︎ REPLACE — PLACEHOLDER WORDING, NOT A REAL QUOTE.
+    Angelo Vinci and Oronzo Pinto are real people. Do not publish this line
+    under either name, or any other, until they have actually said it and
+    signed it off. Get one sentence from a maestro and drop it in here.
+  */
   quote: {
     // EN: "Technique is what's left when strength runs out."
     text: 'La tecnica è quello che resta quando la forza finisce.',
-    attribution: 'Massimo Loparco',
-    role: 'Maestro di karate, fondatore · ⚠︎ REPLACE',
+    attribution: '⚠︎ Nome del maestro',
+    role: '⚠︎ Raccogliere una frase reale prima della pubblicazione',
   },
 
   /* ------------------------------------------------------------------ */
@@ -425,7 +438,7 @@ export const site = {
         links: [
           { label: 'Prova gratuita', href: '#prova' },
           { label: 'Certificato medico', href: '#prova' },
-          { label: 'Lavora con noi', href: 'mailto:ciao@formafasano.it' },
+          { label: 'Lavora con noi', href: 'mailto:info@asdcorpusfasano.it' },
         ],
       },
     ],
@@ -440,10 +453,10 @@ export const site = {
       { label: 'Accessibilità', href: '#' },
     ],
     // ⚠︎ REPLACE — invented company details
-    company: 'FORMA A.S.D. · P.IVA 0000000000 · Fasano (BR)',
+    company: 'ASD Corpus Wellness · P.IVA ⚠︎ REPLACE · Fasano (BR)',
     credits: {
       label: 'Design system',
-      text: 'Template FORMA',
+      text: 'Interworking Design',
       href: '#',
     },
   },

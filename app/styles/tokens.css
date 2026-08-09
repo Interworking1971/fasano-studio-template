@@ -83,9 +83,20 @@
   /* ------------------------------------------------------------------
      5. GRID & RHYTHM
      ------------------------------------------------------------------ */
+  /*
+    Grid. Two columns on mobile, twelve from 930px — NOT 768. Sub-grids are
+    derived by subtracting from the column count rather than being declared
+    separately, which is what keeps insets locked to the same rhythm:
+      repeat(calc(var(--grid-columns) - 2), [start-column] 1fr)   inset by 1
+      repeat(calc(var(--grid-columns) - 6), [start-column] 1fr)   half width
+      repeat(calc(var(--grid-columns) - 7), [start-column] 1fr)
+    Every column line is named `start-column` so sections can span by name.
+  */
   --grid-columns: 2;
   --grid-gap: 10px;
   --gap: 20px;
+  /* Fluid page gutter — scales with the viewport instead of stepping. */
+  --page-margin: calc(1.04167vw + 4px);
   --section-gap: 100px;
   --header-height: 68px;
   --radius: 0px;         /* the system is deliberately square */
@@ -144,9 +155,13 @@
 }
 
 /* --------------------------------------------------------------------
-   TABLET / DESKTOP — the type scale steps up, the grid opens to 12 cols.
+   BREAKPOINTS
+   The reference system uses 375 / 768 / 930 / 1728 / 1788. The important
+   one is 930 — that is where the grid opens from 2 columns to 12 and the
+   display scale steps up. Using 768 here (the obvious tablet guess) puts
+   the twelve-column layout on screens too narrow to hold it.
    -------------------------------------------------------------------- */
-@media (min-width: 768px) {
+@media (min-width: 930px) {
   :root {
     --grid-columns: 12;
     --gap: 30px;
@@ -164,7 +179,7 @@
   }
 }
 
-@media (min-width: 1440px) {
+@media (min-width: 1728px) {
   :root {
     --gap: 40px;
     --section-gap: 200px;

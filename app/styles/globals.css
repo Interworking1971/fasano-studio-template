@@ -28,9 +28,27 @@ body {
   max-width: 1920px;
 }
 
+/*
+  Every column line is named `start-column`, so a section spans by name
+  rather than by number:  grid-column: start-column 3 / span 6;
+  That keeps spans readable and survives a change in column count.
+*/
 .grid {
   display: grid;
-  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  grid-template-columns: repeat(var(--grid-columns), [start-column] minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
+/* Sub-grids are derived from the column count, never declared separately. */
+.grid--inset-1 {
+  display: grid;
+  grid-template-columns: repeat(calc(var(--grid-columns) - 2), [start-column] minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
+.grid--half {
+  display: grid;
+  grid-template-columns: repeat(calc(var(--grid-columns) - 6), [start-column] minmax(0, 1fr));
   gap: var(--grid-gap);
 }
 

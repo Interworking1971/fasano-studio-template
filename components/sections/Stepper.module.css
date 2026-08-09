@@ -1,70 +1,208 @@
+/* ==========================================================================
+   FULL-SIZE SCROLLER STEPPER
+   Measured from the reference. A tall section whose visuals stay pinned
+   while its scroll length is consumed, one viewport per item.
+   ========================================================================== */
+
 .stepper {
-  background-color: var(--color-background-secondary);
+  position: relative;
+  margin-block: 100px;
+  --scroll-progress: 0;
+  /* Viewport aspect, used by the morphing item. */
+  --viewport-ratio: calc(100vw / 100lvh);
 }
 
-.caption {
-  font: var(--font-display-5);
-  font-style: italic;
-  text-align: center;
-  max-width: 30ch;
-  margin: 0 auto 64px;
-  color: var(--color-text-secondary);
+@media (min-width: 930px) {
+  .stepper {
+    margin-block: 200px;
+  }
 }
 
-.steps {
-  display: grid;
-  gap: 64px;
-}
-
-.step {
-  display: grid;
-  gap: 24px;
-}
-
-.stepMedia {
+/* --------------------------------------------------------------------
+   THE PINNED STACK
+   -------------------------------------------------------------------- */
+.masks {
+  position: sticky;
+  top: 0;
   width: 100%;
+  height: fit-content;
 }
 
-.stepText {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+/*
+  Each item's own 0→1, carved out of the section's progress. Band i runs
+  from i/count to (i+1)/count, clamped — so item 0 completes before item 1
+  begins.
+*/
+.item {
+  --band: calc(1 / var(--count));
+  --mask-progress: clamp(
+    0,
+    calc((var(--scroll-progress) - var(--i) * var(--band)) / var(--band)),
+    1
+  );
+
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100lvh;
+  overflow: hidden;
+  will-change: clip-path;
+
+  /* Left edge travels from 100% → 0: the item wipes in from the right. */
+  clip-path: polygon(
+    calc((1 - var(--mask-progress)) * 100%) 0,
+    100% 0,
+    100% 100%,
+    calc((1 - var(--mask-progress)) * 100%) 100%
+  );
 }
 
-.stepIndex {
-  font: var(--font-tiny-1);
-  letter-spacing: 0.24em;
-  color: var(--color-text-secondary);
-  font-variant-numeric: tabular-nums;
+/* The first item is already present — nothing to wipe. */
+.item[data-first='true'] {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
 
-.stepTitle {
-  font: var(--font-display-5);
-  font-size: 1.75rem;
+.container {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  overflow: hidden;
 }
 
-.stepBody {
-  font: var(--font-tiny-1);
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--color-text-secondary);
-  max-width: 38ch;
+.media {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto !important;
 }
 
-@media (min-width: 900px) {
-  .steps {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--gap);
+.media img,
+.media video {
+  height: 100%;
+}
+
+/* --------------------------------------------------------------------
+   THE MORPHING ITEM
+   A square plate that un-crops into full bleed. Three things move
+   together: the container's aspect ratio, the media's scale about a point
+   below centre, and its own clip opening from a 30% inset.
+   -------------------------------------------------------------------- */
+@media (min-width: 930px) {
+  .item[data-morph='true'] {
+    clip-path: none;
   }
 
-  .caption {
-    font: var(--font-display-2);
-    font-style: italic;
-    margin-bottom: 96px;
-    color: var(--color-text-primary);
+  .item[data-morph='true'] .container {
+    aspect-ratio: clamp(
+      1,
+      calc(1 + var(--mask-progress) * (var(--viewport-ratio) - 1)),
+      var(--viewport-ratio)
+    );
+    width: auto;
   }
 
-  /* Staircase the columns so the row never reads as three equal cards. */
-  .step:nth-child(2) { margin-top: 64px; }
-  .step:nth-child(3) { margin-top: 128px; }
+  .item[data-morph='true'] .media {
+    --offset: 25%;
+    --scale: 0.5;
+
+    clip-path: polygon(
+      calc(30% * (1 - var(--mask-progress)))
+        calc((30% + var(--offset)) * (1 - var(--mask-progress))),
+      calc(70% + 30% * var(--mask-progress))
+        calc((30% + var(--offset)) * (1 - var(--mask-progress))),
+      calc(70% + 30% * var(--mask-progress))
+        calc(70% + var(--offset) + (100% - (70% + var(--offset))) * var(--mask-progress)),
+      calc(30% * (1 - var(--mask-progress)))
+        calc(70% + var(--offset) + (100% - (70% + var(--offset))) * var(--mask-progress))
+    );
+
+    transform: scale(
+      max(var(--scale), min(calc(var(--scale) + (1 - var(--scale)) * var(--mask-progress)), 1))
+    );
+    transform-origin: 50% calc(50% + var(--offset));
+  }
+}
+
+/* Below 930 the morph is dropped — it needs the width to read. */
+@media (max-width: 929px) {
+  .item[data-morph='true'] .media {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transform: scale(1);
+  }
+}
+
+/* --------------------------------------------------------------------
+   CAPTION — absolutely placed over the stack at a measured 165px.
+   -------------------------------------------------------------------- */
+.largeTitleContainer {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  z-index: 2;
+  max-width: 1728px;
+  margin-inline: 20px;
+  pointer-events: none;
+}
+
+@media (min-width: 930px) {
+  .largeTitleContainer {
+    margin-inline: 30px;
+  }
+}
+
+@media (min-width: 1788px) {
+  .largeTitleContainer {
+    width: 100%;
+    margin-inline: auto;
+  }
+}
+
+.largeTitle {
+  margin-bottom: 32px;
+}
+
+@media (min-width: 930px) {
+  .largeTitle {
+    position: absolute;
+    top: 165px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 36px;
+    width: 100%;
+    margin-bottom: 0;
+  }
+}
+
+.text {
+  font: var(--font-display-3);
+  text-align: center;
+  width: 100%;
+  color: var(--color-bone-100);
+  mix-blend-mode: difference;
+}
+
+/* --------------------------------------------------------------------
+   SCROLL TRACK — one viewport per item. Pure length, no content.
+   The first beacon is zero-height so item 0 is visible on arrival.
+   -------------------------------------------------------------------- */
+.track {
+  position: relative;
+  /* The stack occupies the first viewport; the rest is scrub length. */
+  margin-top: -100lvh;
+}
+
+.beacon {
+  height: 100lvh;
+}
+
+.beacon:first-of-type {
+  height: 100lvh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item,
+  .item[data-morph='true'] .media {
+    clip-path: none !important;
+    transform: none !important;
+  }
 }

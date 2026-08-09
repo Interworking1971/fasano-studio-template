@@ -28,6 +28,32 @@ export default function Media({
 }) {
   const style = { aspectRatio: slot.ratio } as React.CSSProperties
 
+  /*
+    A slot holds a video as readily as a still — the hero in this system is
+    a silent looping clip. Detected from the extension so content authors
+    only ever set `src`.
+  */
+  const isVideo = /\.(mp4|webm|mov)(\?|$)/i.test(slot.src)
+
+  if (slot.src && isVideo) {
+    return (
+      <figure className={[styles.figure, className].filter(Boolean).join(' ')} style={style}>
+        <video
+          className={styles.img}
+          src={slot.src}
+          poster={slot.poster || undefined}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload={priority ? 'auto' : 'metadata'}
+          aria-label={slot.alt}
+          data-fit={cover ? 'cover' : 'contain'}
+        />
+      </figure>
+    )
+  }
+
   if (slot.src) {
     return (
       <figure className={[styles.figure, className].filter(Boolean).join(' ')} style={style}>

@@ -17,6 +17,8 @@ export type MediaSlot = {
   ratio: string
   /** Printed inside the placeholder while there is no real image. */
   label?: string
+  /** First-frame still for a video src. Ignored for images. */
+  poster?: string
 }
 
 export const media = (label: string, ratio: string, alt: string): MediaSlot => ({

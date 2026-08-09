@@ -170,3 +170,32 @@ The visual language is an original build in a widely-used editorial idiom. No
 markup, stylesheet, copy, imagery or font file was copied from any existing
 site; both typefaces are open-licence Google Fonts. Legal page copy is
 structural placeholder only — have a solicitor draft the real thing.
+
+---
+
+## Dropping in your assets
+
+Every image slot lives in `content/`. Set `src` and the placeholder disappears —
+the box was always reserved, so nothing shifts.
+
+**Stills:**
+
+```ts
+background: { src: '/media/hero.jpg', alt: '…', ratio: '16 / 9' }
+```
+
+**Video** — detected from the extension (`.mp4`, `.webm`, `.mov`) and rendered
+autoplaying, muted, looping and `playsInline`, which is what mobile Safari
+requires. Give it a `poster` for the first frame:
+
+```ts
+background: {
+  src: '/media/hero.mp4',
+  poster: '/media/hero-poster.jpg',
+  alt: '…',
+  ratio: '16 / 9',
+}
+```
+
+Files go in `public/media/`. Nothing else changes — the hero's scroll mask,
+the reveals and the parallax all read from the same slot either way.

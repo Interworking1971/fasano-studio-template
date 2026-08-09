@@ -72,9 +72,28 @@ export function useInView<T extends HTMLElement>(
  * and means a section can be re-choreographed without touching the React.
  */
 export function useScrollProgress<T extends HTMLElement>(
-  options: { property?: string; startOffset?: number; endOffset?: number } = {}
+  options: {
+    property?: string
+    startOffset?: number
+    endOffset?: number
+    /**
+     * `enter` (default) — 0 when the element's top reaches the bottom of the
+     * viewport, 1 when its bottom reaches the top. Right for anything that
+     * scrolls past, e.g. parallax.
+     *
+     * `top` — 0 when the element's top is at the top of the viewport, 1 after
+     * scrolling its own height. Right for a full-height hero pinned at the
+     * top of the page, which under `enter` would already read ~0.5 at rest.
+     */
+    anchor?: 'enter' | 'top'
+  } = {}
 ): RefObject<T | null> {
-  const { property = '--scroll-progress', startOffset = 0, endOffset = 0 } = options
+  const {
+    property = '--scroll-progress',
+    startOffset = 0,
+    endOffset = 0,
+    anchor = 'enter',
+  } = options
   const ref = useRef<T>(null)
 
   useEffect(() => {
@@ -89,11 +108,16 @@ export function useScrollProgress<T extends HTMLElement>(
       const rect = el.getBoundingClientRect()
       const vh = window.innerHeight || document.documentElement.clientHeight
 
-      // 0 when the element's top hits the bottom of the viewport,
-      // 1 when its bottom hits the top.
-      const total = rect.height + vh - startOffset - endOffset
-      const travelled = vh - rect.top - startOffset
-      const progress = Math.min(1, Math.max(0, travelled / total))
+      let progress: number
+      if (anchor === 'top') {
+        progress = Math.min(1, Math.max(0, -rect.top / Math.max(1, rect.height)))
+      } else {
+        // 0 when the element's top hits the bottom of the viewport,
+        // 1 when its bottom hits the top.
+        const total = rect.height + vh - startOffset - endOffset
+        const travelled = vh - rect.top - startOffset
+        progress = Math.min(1, Math.max(0, travelled / total))
+      }
 
       el.style.setProperty(property, progress.toFixed(4))
     }
@@ -123,7 +147,7 @@ export function useScrollProgress<T extends HTMLElement>(
       window.removeEventListener('resize', onScroll)
       if (frame) cancelAnimationFrame(frame)
     }
-  }, [property, startOffset, endOffset])
+  }, [property, startOffset, endOffset, anchor])
 
   return ref
 }

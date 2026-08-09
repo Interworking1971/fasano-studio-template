@@ -17,11 +17,14 @@ export default function Media({
   className,
   priority = false,
   cover = true,
+  tone = 'light',
 }: {
   slot: MediaSlot
   className?: string
   priority?: boolean
   cover?: boolean
+  /** Placeholders must match the surface they sit on, or type over them vanishes. */
+  tone?: 'light' | 'dark'
 }) {
   const style = { aspectRatio: slot.ratio } as React.CSSProperties
 
@@ -45,6 +48,7 @@ export default function Media({
     <figure
       className={[styles.figure, styles.placeholder, className].filter(Boolean).join(' ')}
       style={style}
+      data-tone={tone}
       role="img"
       aria-label={slot.alt}
     >

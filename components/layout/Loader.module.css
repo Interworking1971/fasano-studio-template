@@ -1,45 +1,77 @@
+/* ==========================================================================
+   INTRO OVERLAY
+   Geometry and timing measured from the reference build. The keyhole keeps
+   the viewport's own aspect ratio, so its final expansion lands exactly on
+   the screen edges with no distortion.
+   ========================================================================== */
+
 .loader {
+  --progress: 0;
+  --hole-ratio: 100lvh / 100vw;
+  --hole-w: 15.6vw;
+  --hole-h: calc(15.6vw * var(--hole-ratio));
+
+  /*
+    The content layer's clip-path: a full-bleed rectangle with a notch cut
+    out around the keyhole, entered and exited through the bottom edge.
+  */
+  --clip-path-expanded: polygon(
+    0% 0%,
+    0% 100%,
+    calc(50% - var(--hole-w) / 2) 100%,
+    calc(50% - var(--hole-w) / 2) calc(50% - var(--hole-h) / 2),
+    calc(50% + var(--hole-w) / 2) calc(50% - var(--hole-h) / 2),
+    calc(50% + var(--hole-w) / 2) calc(50% + var(--hole-h) / 2),
+    calc(50% - var(--hole-w) / 2) calc(50% + var(--hole-h) / 2),
+    calc(50% - var(--hole-w) / 2) 100%,
+    100% 100%,
+    100% 0%
+  );
+
   position: fixed;
   inset: 0;
-  z-index: var(--z-loader);
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
   pointer-events: none;
+}
+
+/* Without JS there is no progress to report, so never cover the page. */
+@media (scripting: none) {
+  .loader {
+    display: none;
+  }
 }
 
 /* --------------------------------------------------------------------
    THE PLATE
-   An opaque sheet with a hole cut in it. The hole is mask layer 1; the
-   sheet is mask layer 2; `exclude` subtracts one from the other. Growing
-   layer 1's mask-size is what opens the window.
-
-   The hole keeps the viewport's own aspect ratio (--hole-ratio), so the
-   final expansion lands exactly on the screen edges with no distortion.
+   Two mask layers composited with `exclude`: layer one is the keyhole,
+   layer two is the sheet. Growing layer one's mask-size opens the window.
    -------------------------------------------------------------------- */
-.plate {
+.loader::before {
+  content: '';
   position: absolute;
   inset: 0;
-  background-color: var(--color-grey-900);
+  z-index: -1;
+  background-color: var(--color-bone-100);
 
-  --mask-layers: linear-gradient(#000, #000), linear-gradient(#000, #000);
-
-  -webkit-mask-image: var(--mask-layers);
-  mask-image: var(--mask-layers);
-  -webkit-mask-position: center, center;
-  mask-position: center, center;
-  -webkit-mask-repeat: no-repeat, no-repeat;
-  mask-repeat: no-repeat, no-repeat;
-  -webkit-mask-size: 0 0, 100% 100%;
-  mask-size: 0 0, 100% 100%;
+  -webkit-mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+  mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+  -webkit-mask-position: 50%, 50%;
+  mask-position: 50%, 50%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
   -webkit-mask-composite: xor;
   mask-composite: exclude;
+
+  animation: mask-expand 1.4s 0.5s var(--ease-in-out-quint) both;
 }
 
-[data-state='running'] .plate {
-  animation:
-    mask-expand 1.4s 0.55s var(--ease-in-out-quint) both,
-    mask-full 0.75s 1.95s var(--ease-in-out-quart) both;
+.loader[data-loaded='true']::before {
+  animation: mask-full 0.75s 0.15s var(--ease-in-out-quart) both;
 }
 
-/* Beat 1 — nothing, then a viewport-shaped keyhole. */
 @keyframes mask-expand {
   from {
     -webkit-mask-size: 0 0, 100% 100%;
@@ -51,7 +83,6 @@
   }
 }
 
-/* Beat 2 — the keyhole becomes the whole screen. */
 @keyframes mask-full {
   from {
     -webkit-mask-size: var(--hole-w) var(--hole-h), 100% 100%;
@@ -64,73 +95,191 @@
 }
 
 /* --------------------------------------------------------------------
-   THE WORDMARK
-   Sits on the plate, so it is clipped away by the same mask expansion.
+   CONTENT LAYER — clipped in step with the plate.
    -------------------------------------------------------------------- */
-.center {
-  position: absolute;
-  inset: 0;
+.container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  color: var(--color-bone-100);
-  mix-blend-mode: difference;
+  width: 100%;
+  height: 100%;
+  animation: content-expand 1.4s 0.5s var(--ease-in-out-quint) both;
 }
 
-.kicker {
-  font: var(--font-tiny-1);
-  text-transform: uppercase;
-  letter-spacing: 0.28em;
-  opacity: 0;
+.loader[data-loaded='true'] .container {
+  animation: content-full 0.75s 0.15s var(--ease-in-out-quart) both;
 }
 
-.word {
-  font: var(--font-display-2);
-  letter-spacing: 0.18em;
-  opacity: 0;
+@keyframes content-expand {
+  from {
+    clip-path: polygon(
+      0% 0%, 0% 100%, 50% 100%, 50% 50%, 50% 50%,
+      50% 50%, 50% 50%, 50% 100%, 100% 100%, 100% 0%
+    );
+  }
+  to {
+    clip-path: var(--clip-path-expanded);
+  }
 }
 
-[data-state='running'] .kicker {
-  animation:
-    fade-in 0.7s 0.15s var(--ease-out-sine) both,
-    loader-out 0.5s 1.75s var(--ease-in-quint) both;
-}
-
-[data-state='running'] .word {
-  animation:
-    loader-in 0.9s 0.25s var(--ease-out-quint) both,
-    loader-out 0.5s 1.7s var(--ease-in-quint) both;
-}
-
-@keyframes loader-in {
-  from { opacity: 0; transform: translateY(18px); letter-spacing: 0.4em; }
-  to   { opacity: 1; transform: translateY(0);    letter-spacing: 0.18em; }
-}
-
-@keyframes loader-out {
-  from { opacity: 1; transform: translateY(0); }
-  to   { opacity: 0; transform: translateY(-14px); }
+@keyframes content-full {
+  from {
+    clip-path: var(--clip-path-expanded);
+  }
+  to {
+    clip-path: polygon(
+      0% 0%, 0% 100%, 0% 100%, 0% 0%, 100% 0%,
+      100% 100%, 0% 100%, 0% 100%, 100% 100%, 100% 0%
+    );
+  }
 }
 
 /* --------------------------------------------------------------------
-   Browsers without mask-composite still get a clean fade-out rather than
-   a plate stuck on screen.
+   THE WORDS
+   Set enormous but at 14% opacity — texture, not a headline. They slide
+   apart to sit tight above and below the keyhole.
    -------------------------------------------------------------------- */
+.top,
+.bottom {
+  --opacity: 0.14;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  line-height: 1;
+  font-family: var(--font-family-primary);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--color-grey-900);
+  animation: dynamic-slide 1.4s 0.5s var(--ease-in-out-quint) both;
+}
+
+@media (min-width: 930px) {
+  .top,
+  .bottom {
+    letter-spacing: 0;
+  }
+}
+
+.top p,
+.bottom p {
+  animation:
+    dynamic-fade-in 1.5s var(--ease-out-sine) both,
+    fade-in 0.6s var(--ease-out-sine) both;
+}
+
+/* Fluid between 480 and 1728, then locked. */
+.top {
+  --y: calc(-1 * var(--hole-h) / 2);
+  margin-bottom: 10px;
+  font-size: 32px;
+}
+
+.bottom {
+  --y: calc(var(--hole-h) / 2 + 10px);
+  margin-top: 10px;
+  font-size: 32px;
+}
+
+@media (min-width: 480px) {
+  .top { font-size: calc(7.05128vw - 1.84615px); }
+  .bottom { font-size: calc(7.85256vw - 5.69231px); }
+}
+
+@media (min-width: 1728px) {
+  .top { font-size: 120px; }
+  .bottom { font-size: 130px; }
+}
+
+/* Each line enters on its own beat. */
+.top p:first-child  { animation-delay: 0.1s, 1.5s; }
+.top p:last-child   { animation-delay: 0.2s, 1.5s; }
+.bottom p:first-child { animation-delay: 0.3s, 1.5s; }
+.bottom p:last-child  { animation-delay: 0.4s, 1.5s; }
+
+.loader[data-loaded='true'] .top,
+.loader[data-loaded='true'] .bottom {
+  animation: slide-out 0.7s var(--ease-in-quint) both;
+}
+
+.loader[data-loaded='true'] .top { --y-out: -25%; }
+.loader[data-loaded='true'] .bottom { --y-out: 25%; }
+
+@keyframes dynamic-slide {
+  to { transform: translate3d(0, var(--y), 0); }
+}
+
+@keyframes dynamic-fade-in {
+  from { opacity: 0; }
+  to { opacity: var(--opacity); }
+}
+
+@keyframes slide-out {
+  from { transform: translate3d(0, var(--y), 0); }
+  to { transform: translate3d(0, calc(var(--y) + var(--y-out)), 0); }
+}
+
+/* --------------------------------------------------------------------
+   PROGRESS — a hairline rule and a percentage that travels with it.
+   -------------------------------------------------------------------- */
+.progress {
+  --opacity: 0.2;
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  right: 30px;
+  height: 1.5px;
+}
+
+.progress::before,
+.progress::after {
+  content: '';
+  display: block;
+  height: 1.5px;
+  background-color: var(--color-grey-900);
+}
+
+.progress::before {
+  animation: dynamic-fade-in 1.5s var(--ease-out-sine) forwards;
+}
+
+.progress::after {
+  transform: scaleX(max(0, var(--progress))) translateY(-100%);
+  transform-origin: 0 0;
+}
+
+.indicator {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  font: var(--font-display-5);
+  letter-spacing: 0.02em;
+  color: var(--color-grey-900);
+  opacity: max(0, var(--progress, 0));
+  /* Travel the full width, then pull back by its own width at the end. */
+  transform:
+    translateX(calc(max(0, var(--progress, 0)) * (100vw - 60px)))
+    translateX(calc(-100% * max(0, var(--progress, 0))));
+}
+
+@media (min-width: 930px) {
+  .indicator { letter-spacing: 0; }
+}
+
+/* Browsers without mask-composite get a clean fade rather than a stuck plate. */
 @supports not ((mask-composite: exclude) or (-webkit-mask-composite: xor)) {
-  .plate {
+  .loader::before {
     -webkit-mask-image: none;
     mask-image: none;
+    animation: none;
   }
-
-  [data-state='running'] .plate {
-    animation: fade-out-plate 0.6s 1.9s var(--ease-in-out-quart) both;
+  .loader[data-loaded='true']::before {
+    animation: fade-out-plate 0.6s var(--ease-in-out-quart) both;
   }
-
   @keyframes fade-out-plate {
     from { opacity: 1; }
-    to   { opacity: 0; }
+    to { opacity: 0; }
   }
 }
 

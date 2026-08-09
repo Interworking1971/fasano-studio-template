@@ -32,6 +32,32 @@
     linear-gradient(155deg, var(--color-bone-200) 0%, var(--color-bone-300) 100%);
 }
 
+/*
+  Dark surfaces need a dark placeholder. The hero sets light type over this
+  slot, and on the light placeholder that type is invisible — a real bug the
+  moment a client hasn't supplied photography yet.
+*/
+.placeholder[data-tone='dark'] {
+  background-color: var(--color-grey-900);
+  background-image:
+    radial-gradient(120% 90% at 24% 10%, rgb(255 255 255 / 10%) 0%, transparent 58%),
+    radial-gradient(100% 100% at 82% 96%, rgb(180 85 45 / 22%) 0%, transparent 62%),
+    linear-gradient(155deg, #26231f 0%, #121110 100%);
+}
+
+.placeholder[data-tone='dark'] .grain {
+  mix-blend-mode: screen;
+  opacity: 0.22;
+}
+
+.placeholder[data-tone='dark'] .rule {
+  border-color: rgb(244 241 236 / 12%);
+}
+
+.placeholder[data-tone='dark'] .caption {
+  color: rgb(244 241 236 / 55%);
+}
+
 /* Film grain, generated in-CSS — no asset, no request. */
 .grain {
   position: absolute;

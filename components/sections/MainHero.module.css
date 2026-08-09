@@ -1,158 +1,181 @@
+/* ==========================================================================
+   MAIN HERO
+   Measured from the reference build. The defining behaviour is the mask:
+   the media is clipped by a centre-anchored rectangle that contracts to 70%
+   as the section scrolls, so the image appears to withdraw into the page
+   rather than simply moving past it.
+   ========================================================================== */
+
 .hero {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  min-height: 100lvh;
-  /* Bottom padding leaves a clear band for the scroll cue below the foot row. */
-  padding-block: calc(var(--header-height) + 40px) 104px;
-  overflow: hidden;
-  isolation: isolate;
-}
+  /* Written every frame by useScrollProgress. */
+  --mask-progress: 0;
 
-/* --------------------------------------------------------------------
-   BACKGROUND
-   -------------------------------------------------------------------- */
-.bg {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-}
-
-.bgParallax {
-  width: 100%;
-  height: 100%;
-}
-
-.bgMedia {
-  width: 100%;
-  height: 100%;
-  aspect-ratio: auto !important;
-}
-
-.bgMedia img {
-  height: 100%;
-}
-
-/* Keeps the display type legible over any photograph the client supplies. */
-.scrim {
-  position: absolute;
-  inset: 0;
   /*
-    Heavy at the bottom where the copy sits, almost clear at the top so the
-    photograph (or the placeholder's grain) still reads as an image.
+    Horizontal lags vertical by 0.1 of the progress, so the rectangle
+    closes on the vertical axis first. That asymmetry is what stops it
+    reading as a plain uniform scale.
   */
-  background: linear-gradient(
-    to top,
-    color-mix(in srgb, var(--color-bone-100) 94%, transparent) 0%,
-    color-mix(in srgb, var(--color-bone-100) 78%, transparent) 30%,
-    color-mix(in srgb, var(--color-bone-100) 30%, transparent) 68%,
-    color-mix(in srgb, var(--color-bone-100) 12%, transparent) 100%
+  --mask-scale-h: calc(1 - 0.3 * max(0, calc(var(--mask-progress) - 0.1)));
+  --mask-scale-v: calc(1 - 0.3 * var(--mask-progress));
+}
+
+.mask {
+  width: 100%;
+  height: 100svh;
+  clip-path: polygon(
+    calc(50% - 50% * var(--mask-scale-h)) calc(50% - 50% * var(--mask-scale-v)),
+    calc(50% + 50% * var(--mask-scale-h)) calc(50% - 50% * var(--mask-scale-v)),
+    calc(50% + 50% * var(--mask-scale-h)) calc(50% + 50% * var(--mask-scale-v)),
+    calc(50% - 50% * var(--mask-scale-h)) calc(50% + 50% * var(--mask-scale-v))
   );
 }
 
+.media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--color-grey-900);
+}
+
+.mediaInner {
+  width: 100%;
+  height: 100%;
+  /* Hairline overscale hides subpixel edges during the clip. */
+  transform: scale(1.01);
+  aspect-ratio: auto !important;
+}
+
+.mediaInner img {
+  height: 100%;
+}
+
 /* --------------------------------------------------------------------
-   TYPE
+   WORDMARK — fixed to the top-left, at measured sizes.
    -------------------------------------------------------------------- */
-.inner {
-  position: relative;
-  z-index: var(--z-content);
+.brand {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 89;
+  display: flex;
+  align-items: center;
+  width: 230px;
+  height: 70px;
+  padding-left: var(--gap);
+  font: var(--font-display-5);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-bone-100);
+  mix-blend-mode: difference;
+  pointer-events: none;
 }
 
+@media (min-width: 930px) {
+  .brand { width: 250px; height: 75px; }
+}
+
+@media (min-width: 1728px) {
+  .brand { width: 290px; height: 90px; }
+}
+
+/* --------------------------------------------------------------------
+   CONTENT — fixed and centred, so it holds still inside the closing mask.
+   -------------------------------------------------------------------- */
+.content {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  width: 100%;
+  height: 100%;
+  max-height: 100svh;
+  overflow: hidden;
+  padding-inline: var(--gap);
+  pointer-events: none;
+  /* Fades out as the mask closes, so it never sits over the page below. */
+  opacity: calc(1 - var(--mask-progress) * 2.4);
+}
+
+@media (min-width: 930px) {
+  .content { gap: 18px; }
+}
+
+@media (min-width: 1728px) {
+  .content { gap: 21px; }
+}
+
+/* --------------------------------------------------------------------
+   TITLE — deliberately small. The mask is the subject, not the type.
+   -------------------------------------------------------------------- */
 .title {
-  font: var(--font-header);
-  letter-spacing: -0.02em;
-  max-width: 16ch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font: var(--font-display-5);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-bone-100);
 }
 
-/* Each row is its own mask; the child slides up from below the baseline. */
+@media (min-width: 930px) {
+  .title { letter-spacing: 0; }
+}
+
 .line {
-  display: block;
+  display: inline-block;
   overflow: hidden;
 }
 
-.line > span {
-  display: block;
-  transform: translateY(110%);
-  animation: hero-line 1.15s var(--ease-out-quint) both;
-  animation-delay: calc(0.35s + var(--i) * 0.09s);
+.lineInner {
+  display: inline-block;
+  transform: translateY(100%);
+  animation: hero-line 1s var(--ease-out-quint) both;
+  animation-delay: calc(0.35s + var(--i) * 0.08s);
+}
+
+.lineInner[data-em='true'] {
+  font-style: italic;
+  text-transform: none;
 }
 
 @keyframes hero-line {
-  from { transform: translateY(110%); }
+  from { transform: translateY(100%); }
   to   { transform: translateY(0); }
 }
 
-.foot {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 28px;
-  margin-top: 40px;
-  animation: fade-in-up 1s 0.9s var(--ease-out-quart) both;
-}
-
 .standfirst {
-  font: var(--font-body);
-  max-width: 46ch;
-  color: var(--color-text-primary);
-}
-
-.cta {
-  flex: none;
+  max-width: 44ch;
+  text-align: center;
+  font: var(--font-tiny-1);
+  letter-spacing: 0.04em;
+  color: var(--color-bone-100);
+  opacity: 0.7;
+  animation: fade-in 1s 0.9s var(--ease-out-sine) both;
 }
 
 /* --------------------------------------------------------------------
    SCROLL CUE
    -------------------------------------------------------------------- */
-.cue {
+.scrollCue {
   position: absolute;
-  bottom: 30px;
+  bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: var(--z-content);
-  color: var(--color-text-primary);
-  animation: fade-in 1s 1.6s var(--ease-out-sine) both;
-  display: none;
+  z-index: 1;
+  color: var(--color-bone-100);
+  animation: fade-in 1s 1.5s var(--ease-out-sine) both;
 }
 
-/* --------------------------------------------------------------------
-   WATERMARK
-   The wordmark blown up and cropped by the bottom edge. It has to stay
-   below the copy band and read as texture, not as a second headline —
-   hence the deep crop and the very low opacity ceiling.
-   -------------------------------------------------------------------- */
-.watermark {
-  position: absolute;
-  left: 50%;
-  bottom: -0.36em;
-  transform: translateX(-50%);
-  z-index: -1;
-  font-family: var(--font-family-primary);
-  font-size: 21vw;
-  line-height: 0.8;
-  letter-spacing: 0.04em;
-  color: var(--color-text-primary);
-  opacity: 0.04;
-  pointer-events: none;
-  user-select: none;
-  white-space: nowrap;
-  animation: pulsate-soft 16s ease-in-out 2s infinite;
-}
-
-@keyframes pulsate-soft {
-  0%, 100% { opacity: 0.035; }
-  50%      { opacity: 0.06; }
-}
-
-@media (min-width: 768px) {
-  .cue { display: block; }
-
-  .foot {
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 60px;
-    margin-top: 56px;
-  }
+@media (prefers-reduced-motion: reduce) {
+  .hero { --mask-progress: 0; }
+  .content { opacity: 1; }
+  .lineInner { transform: none; animation: none; }
 }

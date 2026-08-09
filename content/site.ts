@@ -57,10 +57,14 @@ export const site = {
     ],
   },
 
-  /* Intro overlay — plays once per session. */
+  /*
+    Intro overlay — plays once per session.
+    Two lines above the keyhole, two below. They slide apart to open it,
+    so keep each line short: these are set at up to 120/130px.
+  */
   loader: {
-    kicker: 'Editorial template',
-    word: 'STUDIO',
+    top: ['WHERE', 'MATERIAL'],
+    bottom: ['BECOMES', 'MEMORY'],
   },
 
   /* Primary navigation — one entry per page type in the template. */
